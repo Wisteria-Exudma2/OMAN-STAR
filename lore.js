@@ -9,7 +9,7 @@
   /* ══════════════════════════════════════════════════════════
      CONFIG — ganti URL_SUPABASE setelah upload ke Supabase
   ══════════════════════════════════════════════════════════ */
-  const LORE_BGM_URL = 'https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Audio/folk_acoustic_music-a-call-to-the-soul-149262.ogg'; // ← isi URL Supabase di sini
+  const LORE_BGM_URL = 'https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Audio/Akustik%20OGG.ogg'; // ← isi URL Supabase di sini
 
   /* ══════════════════════════════════════════════════════════
      STATE
