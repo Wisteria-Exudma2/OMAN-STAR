@@ -1,0 +1,523 @@
+/* ============================================================
+   LORE.CSS — OMAN Kitab Langit yang Kehilangan Bintang
+   BGM Player + Bonfire Scene + Dark Fantasy Layout
+   ============================================================ */
+
+/* ── Page Base ───────────────────────────────────────────── */
+#page-lore {
+  position: relative;
+  min-height: 100vh;
+  z-index: 1;
+}
+
+/* ── Canvas ──────────────────────────────────────────────── */
+#lore-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ════════════════════════════════════════════════════════════
+   BGM PLAYER BAR
+════════════════════════════════════════════════════════════ */
+.lore-bgm-bar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: min(480px, calc(100vw - 32px));
+  background: rgba(8, 4, 18, 0.88);
+  border: 1px solid rgba(200, 168, 75, 0.35);
+  border-radius: 16px;
+  padding: 12px 18px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 40px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(200,168,75,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.lore-bgm-bar.lore-bgm-hidden {
+  opacity: 0;
+  transform: translateX(-50%) translateY(20px);
+  pointer-events: none;
+}
+
+/* top row */
+.lore-bgm-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lore-bgm-icon {
+  font-size: 1.4rem;
+  animation: lore-bgm-pulse 2.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes lore-bgm-pulse {
+  0%,100% { filter: drop-shadow(0 0 4px #c8a84b88); }
+  50%      { filter: drop-shadow(0 0 12px #ffd97acc); }
+}
+
+.lore-bgm-info {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.lore-bgm-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.5rem;
+  color: #c8a84b;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lore-bgm-sub {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.78rem;
+  color: #7a6a50;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+/* controls */
+.lore-bgm-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.lore-bgm-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(200,168,75,0.5);
+  background: rgba(200,168,75,0.12);
+  color: #c8a84b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.lore-bgm-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.lore-bgm-btn:hover {
+  background: rgba(200,168,75,0.28);
+  border-color: #c8a84b;
+  box-shadow: 0 0 14px #c8a84b55;
+  transform: scale(1.08);
+}
+
+.lore-bgm-btn:active { transform: scale(0.95); }
+
+/* volume */
+.lore-bgm-vol-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lore-bgm-vol-icon {
+  width: 16px;
+  height: 16px;
+  color: #7a6a50;
+  flex-shrink: 0;
+}
+
+.lore-bgm-vol {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 72px;
+  height: 3px;
+  background: rgba(200,168,75,0.25);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.lore-bgm-vol::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #c8a84b;
+  box-shadow: 0 0 6px #c8a84b88;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.lore-bgm-vol::-webkit-slider-thumb:hover { transform: scale(1.3); }
+
+/* progress bar */
+.lore-bgm-progress-wrap {
+  width: 100%;
+}
+
+.lore-bgm-progress-bar {
+  width: 100%;
+  height: 3px;
+  background: rgba(200,168,75,0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.lore-bgm-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #c8a84b, #ffd97a);
+  border-radius: 2px;
+  transition: width 0.5s linear;
+  box-shadow: 0 0 8px #c8a84b66;
+}
+
+/* status dot */
+.lore-bgm-status {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #444;
+  flex-shrink: 0;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.lore-bgm-status.playing {
+  background: #5ec46a;
+  box-shadow: 0 0 8px #5ec46a99;
+  animation: lore-status-blink 1.5s ease-in-out infinite;
+}
+
+.lore-bgm-status.loading {
+  background: #c8a84b;
+  box-shadow: 0 0 8px #c8a84b99;
+  animation: lore-status-blink 0.6s ease-in-out infinite;
+}
+
+.lore-bgm-status.error {
+  background: #e05c5c;
+  box-shadow: 0 0 8px #e05c5c99;
+}
+
+@keyframes lore-status-blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* ════════════════════════════════════════════════════════════
+   LORE WRAPPER & TYPOGRAPHY
+════════════════════════════════════════════════════════════ */
+.lore-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 60px 24px 160px;
+  font-family: 'Crimson Text', Georgia, serif;
+  color: #e8dcc8;
+}
+
+/* ── Hero ──────────────────────────────────────────────── */
+.lore-hero {
+  text-align: center;
+  padding: 80px 0 60px;
+}
+
+.lore-hero-ornament {
+  font-size: 1.1rem;
+  letter-spacing: 0.4em;
+  color: #c8a84b;
+  margin-bottom: 20px;
+  text-shadow: 0 0 18px #c8a84b88;
+}
+
+.lore-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(2.4rem, 8vw, 5rem);
+  color: #fff;
+  letter-spacing: 0.15em;
+  margin: 0 0 8px;
+  text-shadow: 0 0 40px #c8a84b, 0 0 80px #c8a84b66, 0 2px 0 #0008;
+  animation: lore-title-glow 4s ease-in-out infinite alternate;
+}
+
+@keyframes lore-title-glow {
+  from { text-shadow: 0 0 30px #c8a84b, 0 0 60px #c8a84b44; }
+  to   { text-shadow: 0 0 55px #ffd97a, 0 0 100px #ffd97a66, 0 0 160px #ff990022; }
+}
+
+.lore-subtitle {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: #c8a84b;
+  font-style: italic;
+  margin: 0 0 16px;
+  letter-spacing: 0.05em;
+}
+
+.lore-tagline {
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  color: #a89070;
+  font-style: italic;
+  margin: 0 0 40px;
+}
+
+/* ── TOC ─────────────────────────────────────────────── */
+.lore-toc {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.lore-toc-btn {
+  background: rgba(200,168,75,0.08);
+  border: 1px solid rgba(200,168,75,0.3);
+  color: #c8a84b;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.03em;
+}
+
+.lore-toc-btn:hover {
+  background: rgba(200,168,75,0.2);
+  border-color: #c8a84b;
+  color: #fff;
+  box-shadow: 0 0 12px #c8a84b44;
+}
+
+/* ── Chapter ─────────────────────────────────────────── */
+.lore-chapter {
+  margin: 0 0 72px;
+  padding: 48px 40px;
+  background: rgba(10, 8, 20, 0.75);
+  border: 1px solid rgba(200,168,75,0.18);
+  border-radius: 8px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 4px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(200,168,75,0.06);
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease, border-color 0.3s;
+}
+
+.lore-chapter.lore-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lore-chapter:hover { border-color: rgba(200,168,75,0.35); }
+
+.lore-chapter--epilog {
+  background: rgba(20,10,5,0.82);
+  border-color: rgba(255,90,50,0.22);
+}
+
+.lore-chapter-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: #c8a84b;
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+
+.lore-chapter-title {
+  font-family: 'Crimson Text', serif;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 600;
+  color: #f0e2c0;
+  margin: 0 0 28px;
+  line-height: 1.2;
+  border-bottom: 1px solid rgba(200,168,75,0.2);
+  padding-bottom: 16px;
+}
+
+.lore-chapter-body {
+  line-height: 1.85;
+  font-size: clamp(1rem, 2.5vw, 1.18rem);
+}
+
+.lore-chapter-body p { margin: 0 0 18px; color: #d4c5a8; }
+.lore-chapter-body strong { color: #f0d98a; font-weight: 600; }
+.lore-chapter-body em { color: #c8b08a; font-style: italic; }
+.lore-italic { font-style: italic; color: #b09878 !important; }
+
+.lore-h3 {
+  font-family: 'Crimson Text', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #c8a84b;
+  margin: 28px 0 10px;
+  letter-spacing: 0.03em;
+}
+
+/* ── Quote ─────────────────────────────────────────── */
+.lore-quote {
+  border-left: 3px solid #c8a84b;
+  margin: 24px 0;
+  padding: 12px 24px;
+  font-size: 1.25rem;
+  font-style: italic;
+  color: #f0d98a;
+  background: rgba(200,168,75,0.06);
+  border-radius: 0 4px 4px 0;
+}
+
+/* ── Constellation Grid ──────────────────────────── */
+.lore-constellation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.lore-const-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 18px 16px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s;
+}
+
+.lore-const-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--cc,#888) 14%, transparent), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.lore-const-card:hover::before { opacity: 1; }
+.lore-const-card:hover {
+  border-color: var(--cc, #888);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--cc,#888) 22%, transparent);
+  transform: translateY(-3px);
+}
+
+.lore-const-icon { font-size: 1.9rem; margin-bottom: 8px; }
+.lore-const-name { font-family: 'Crimson Text', serif; font-size: 1.1rem; font-weight: 600; color: #f0e2c0; margin-bottom: 2px; }
+.lore-const-epithet { font-size: 0.78rem; color: var(--cc,#c8a84b); font-style: italic; margin-bottom: 8px; letter-spacing: 0.04em; }
+.lore-const-desc { font-size: 0.9rem; color: #a89878; line-height: 1.6; }
+
+/* ── Faction Grid ───────────────────────────────── */
+.lore-faction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.lore-faction-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-top: 3px solid var(--fc,#888);
+  border-radius: 8px;
+  padding: 20px 18px;
+  transition: all 0.25s;
+}
+
+.lore-faction-card:hover {
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--fc,#888) 18%, transparent);
+  transform: translateY(-3px);
+}
+
+.lore-faction-icon { font-size: 1.7rem; margin-bottom: 9px; }
+.lore-faction-name { font-family: 'Press Start 2P', monospace; font-size: 0.52rem; color: var(--fc,#c8a84b); letter-spacing: 0.1em; margin-bottom: 7px; line-height: 1.7; }
+.lore-faction-motto { font-style: italic; color: #d4c5a8; font-size: 0.9rem; margin-bottom: 10px; line-height: 1.5; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 10px; }
+.lore-faction-desc { font-size: 0.88rem; color: #a89070; line-height: 1.65; }
+
+/* ── Zen Pills ──────────────────────────────────── */
+.lore-zen-pills { display: flex; flex-direction: column; gap: 9px; margin: 14px 0 22px; }
+.lore-zen-pill {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 9px 16px;
+  background: rgba(255,255,255,0.04);
+  border-left: 3px solid var(--zc,#888);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.98rem;
+  color: var(--zc,#d4c5a8);
+  font-style: italic;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--zc,#888) 40%, transparent);
+}
+
+/* ── Magic Paths ────────────────────────────────── */
+.lore-magic-paths { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; margin: 14px 0; }
+.lore-magic-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(200,168,75,0.14); border-radius: 8px; padding: 16px; }
+.lore-magic-name { font-family: 'Press Start 2P', monospace; font-size: 0.48rem; color: #c8a84b; letter-spacing: 0.1em; margin-bottom: 3px; line-height: 1.7; }
+.lore-magic-sub { font-size: 0.78rem; color: #7a6a55; font-style: italic; margin-bottom: 7px; }
+.lore-magic-desc { font-size: 0.9rem; color: #a89070; line-height: 1.65; }
+
+/* ── Whispers ───────────────────────────────────── */
+.lore-whispers { margin: 22px 0; display: flex; flex-direction: column; gap: 10px; padding-left: 22px; }
+
+.lore-whisper {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-style: italic;
+  color: #c8a84b;
+  text-shadow: 0 0 20px #c8a84b66;
+  animation: whisper-fade 3s ease-in-out infinite alternate;
+}
+
+.lore-whisper:nth-child(1) { animation-delay: 0s; }
+.lore-whisper:nth-child(2) { animation-delay: 0.5s; }
+.lore-whisper:nth-child(3) { animation-delay: 1s; }
+.lore-whisper:nth-child(4) { animation-delay: 1.5s; }
+.lore-whisper::before { content: '✦ '; font-style: normal; opacity: 0.6; }
+
+@keyframes whisper-fade {
+  from { opacity: 0.5; text-shadow: 0 0 8px #c8a84b22; }
+  to   { opacity: 1;   text-shadow: 0 0 28px #c8a84baa; }
+}
+
+/* ── Divider ────────────────────────────────────── */
+.lore-divider { border: none; border-top: 1px solid rgba(200,168,75,0.2); margin: 30px 0; }
+
+/* ── Closing ────────────────────────────────────── */
+.lore-closing { text-align: center; margin-top: 44px; padding-top: 36px; border-top: 1px solid rgba(200,168,75,0.2); }
+.lore-ornament-line { font-size: 0.95rem; color: #c8a84b; letter-spacing: 0.3em; margin: 16px 0; text-shadow: 0 0 16px #c8a84b66; }
+.lore-closing-text { font-size: 1.1rem; font-style: italic; color: #c8b08a; margin: 14px 0 6px; }
+.lore-closing-big { font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 600; color: #f0e2c0; margin: 6px 0 14px; }
+.lore-closing-big strong { color: #ffd97a; }
+.lore-closing-sub { font-size: 1.02rem; font-style: italic; color: #8a7a60; line-height: 2; margin: 14px 0; }
+.lore-nameplate { font-size: 1.35rem; letter-spacing: 0.08em; text-shadow: 0 0 28px #ffd97a88; }
+.lore-closing-stamp { display: inline-block; border: 1px solid rgba(200,168,75,0.35); padding: 12px 26px; border-radius: 6px; font-family: 'Press Start 2P', monospace; font-size: 0.44rem; color: #c8a84b; letter-spacing: 0.12em; line-height: 2.1; margin-top: 18px; box-shadow: 0 0 22px #c8a84b1a; }
+
+/* ── Responsive ─────────────────────────────────── */
+@media (max-width: 600px) {
+  .lore-chapter { padding: 26px 18px; }
+  .lore-wrapper { padding: 40px 12px 160px; }
+  .lore-constellation-grid,
+  .lore-faction-grid,
+  .lore-magic-paths { grid-template-columns: 1fr; }
+  .lore-bgm-vol-wrap { display: none; }
+}

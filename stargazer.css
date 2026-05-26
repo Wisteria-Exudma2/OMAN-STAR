@@ -1,0 +1,481 @@
+/* ═══════════════════════════════════════════════════════════════
+   STARGAZER.CSS — v2 — Bioluminescent Night Sky OMAN
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Page Layout ─────────────────────────────────────────────── */
+#page-bintang {
+  position: relative;
+  min-height: 100vh;
+  background: #000;
+  overflow: hidden;
+}
+
+/* ── Stargazer Container ──────────────────────────────────────── */
+.stargazer-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ── Canvas ──────────────────────────────────────────────────── */
+#stargazer-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  display: block;
+}
+#stargazer-canvas:active { cursor: grabbing; }
+
+/* ═══════════════════════════════════════════════════════════════
+   BIOLUMINESCENT TEXT GLOW SYSTEM
+═══════════════════════════════════════════════════════════════ */
+@keyframes bioGlowPulse {
+  0%, 100% { text-shadow: 0 0 6px rgba(255,220,80,0.5), 0 0 14px rgba(255,160,20,0.3), 0 0 28px rgba(255,120,0,0.15); }
+  50%       { text-shadow: 0 0 10px rgba(255,230,100,0.9), 0 0 24px rgba(255,180,40,0.6), 0 0 48px rgba(255,120,0,0.3); }
+}
+
+@keyframes bioGlowHover {
+  0%, 100% { text-shadow: 0 0 8px rgba(255,230,100,0.9), 0 0 20px rgba(255,180,40,0.6), 0 0 40px rgba(255,120,0,0.3); }
+  50%       { text-shadow: 0 0 14px rgba(255,245,140,1), 0 0 30px rgba(255,200,60,0.85), 0 0 60px rgba(255,140,0,0.5); }
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+.stargazer-header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+  padding: 16px 28px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, transparent 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.stargazer-title {
+  font-family: var(--font-ui, 'Cinzel', serif);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: rgba(255, 250, 230, 0.95);
+  text-transform: uppercase;
+  animation: bioGlowPulse 4s ease-in-out infinite;
+}
+.stargazer-title span { color: #ffe866; margin-right: 10px; }
+
+.stargazer-subtitle {
+  font-family: var(--font-ui, 'Cinzel', serif);
+  font-size: 0.6rem;
+  color: rgba(255, 230, 160, 0.65);
+  letter-spacing: 0.18em;
+  text-shadow: 0 0 8px rgba(255,180,40,0.4);
+}
+
+/* ── Controls Panel ──────────────────────────────────────────── */
+.stargazer-controls {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 8, 20, 0.75);
+  border: 1px solid rgba(0, 200, 160, 0.2);
+  border-radius: 50px;
+  padding: 10px 20px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 4px 32px rgba(0, 150, 120, 0.2), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.sg-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 200, 60, 0.25);
+  background: rgba(30, 20, 0, 0.2);
+  color: rgba(255, 245, 200, 0.85);
+  font-family: var(--font-ui, 'Cinzel', serif);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  text-shadow: 0 0 6px rgba(255,200,60,0.4);
+}
+.sg-btn:hover {
+  background: rgba(80, 50, 0, 0.3);
+  border-color: rgba(255, 210, 60, 0.6);
+  color: #ffe866;
+  animation: bioGlowHover 2s ease-in-out infinite;
+  box-shadow: 0 0 14px rgba(255,180,40,0.3);
+}
+.sg-btn.active {
+  background: rgba(90, 60, 0, 0.35);
+  border-color: rgba(255, 210, 60, 0.75);
+  color: #ffe866;
+  text-shadow: 0 0 10px rgba(255,220,80,0.95), 0 0 24px rgba(255,150,20,0.6);
+  box-shadow: 0 0 20px rgba(255,180,40,0.45);
+}
+.sg-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+.sg-divider { width: 1px; height: 24px; background: rgba(255,200,60,0.18); }
+
+/* ── Tooltip ─────────────────────────────────────────────────── */
+.stargazer-tooltip {
+  position: absolute;
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: translateY(4px);
+}
+.stargazer-tooltip.visible { opacity: 1; transform: translateY(0); }
+
+.tooltip-inner {
+  background: rgba(10, 6, 0, 0.92);
+  border: 1px solid rgba(255, 200, 60, 0.35);
+  border-radius: 10px;
+  padding: 10px 14px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 24px rgba(255,160,20,0.2), 0 0 0 1px rgba(255,220,60,0.06);
+  min-width: 160px;
+  max-width: 240px;
+}
+
+.tooltip-star-name {
+  font-family: var(--font-ui, 'Cinzel', serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff8e0;
+  margin-bottom: 2px;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 8px rgba(255,220,80,0.7);
+}
+.tooltip-constellation {
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.63rem;
+  color: rgba(255, 210, 120, 0.75);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.tooltip-mag {
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.6rem;
+  color: rgba(255, 190, 80, 0.65);
+}
+.tooltip-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe866, #ff9900);
+  box-shadow: 0 0 8px #ffcc44;
+  margin-right: 7px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+/* ── Right Panel: Constellation Legend ───────────────────────── */
+.sg-legend {
+  position: absolute;
+  top: 60px;
+  right: 16px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.sg-legend::-webkit-scrollbar { display: none; }
+
+.sg-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 6, 0, 0.72);
+  border: 1px solid rgba(255, 180, 40, 0.18);
+  border-radius: 8px;
+  padding: 6px 12px 6px 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+  min-width: 110px;
+}
+.sg-legend-item:hover {
+  border-color: rgba(255, 220, 60, 0.55);
+  background: rgba(60, 40, 0, 0.5);
+  transform: translateX(-3px);
+  box-shadow: 0 0 12px rgba(255,180,40,0.25), inset 0 0 8px rgba(255,220,60,0.06);
+}
+.sg-legend-item:hover .sg-legend-name {
+  color: #ffe866;
+  animation: bioGlowHover 2s ease-in-out infinite;
+}
+.sg-legend-item.dimmed { opacity: 0.28; }
+.sg-legend-item.focused {
+  border-color: rgba(255, 220, 60, 0.8);
+  background: rgba(70, 45, 0, 0.55);
+  box-shadow: 0 0 18px rgba(255,180,40,0.35);
+}
+.sg-legend-item.focused .sg-legend-name {
+  color: #ffe866;
+  text-shadow: 0 0 10px rgba(255,230,80,1), 0 0 24px rgba(255,150,20,0.6);
+}
+
+.sg-legend-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe866, #ff8800);
+  box-shadow: 0 0 6px #ffbb33;
+  flex-shrink: 0;
+}
+
+.sg-legend-name {
+  font-family: var(--font-ui, 'Cinzel', serif);
+  font-size: 0.58rem;
+  font-weight: 600;
+  color: rgba(255, 240, 190, 0.8);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+/* ── Bottom-left info ────────────────────────────────────────── */
+.stargazer-info { position: absolute; bottom: 32px; left: 28px; z-index: 20; pointer-events: none; }
+.stargazer-compass {
+  font-family: var(--font-ui, 'Cinzel', serif);
+  font-size: 0.6rem;
+  color: rgba(255, 235, 160, 0.65);
+  letter-spacing: 0.14em;
+  margin-bottom: 4px;
+  text-shadow: 0 0 8px rgba(255,180,40,0.45);
+  animation: bioGlowPulse 5s ease-in-out infinite;
+}
+.stargazer-hint {
+  font-family: var(--font-ui, 'Cinzel', serif);
+  font-size: 0.55rem;
+  color: rgba(255, 210, 100, 0.5);
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 6px rgba(255,160,30,0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   POPUP KONSTELASI
+═══════════════════════════════════════════════════════════════ */
+@keyframes popupFadeIn {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.sg-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 3, 12, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.sg-popup-overlay.show { opacity: 1; }
+
+.sg-popup {
+  position: relative;
+  max-width: 520px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: rgba(0, 6, 18, 0.92);
+  border-radius: 18px;
+  padding: 28px 28px 24px;
+  animation: popupFadeIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,200,150,0.3) transparent;
+}
+.sg-popup::-webkit-scrollbar { width: 4px; }
+.sg-popup::-webkit-scrollbar-thumb { background: rgba(0,200,150,0.3); border-radius: 4px; }
+
+.sg-popup-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,200,150,0.3);
+  background: rgba(0,40,30,0.5);
+  color: rgba(160,240,210,0.7);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-family: sans-serif;
+}
+.sg-popup-close:hover {
+  background: rgba(0,120,80,0.4);
+  border-color: rgba(0,255,180,0.6);
+  color: #00ffcc;
+  box-shadow: 0 0 12px rgba(0,200,150,0.4);
+}
+
+.sg-popup-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.sg-popup-emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 10px rgba(255,200,60,0.6));
+}
+.sg-popup-title-block { flex: 1; }
+.sg-popup-name {
+  font-family: var(--font-ui, 'Cinzel', serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  /* color set dynamically via JS */
+  text-shadow: 0 0 16px currentColor;
+}
+.sg-popup-subtitle {
+  font-family: var(--font-ui, 'Cinzel', serif);
+  font-size: 0.62rem;
+  color: rgba(255, 210, 120, 0.65);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.sg-popup-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,190,40,0.35), transparent);
+  margin: 14px 0;
+}
+
+.sg-popup-desc {
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.82rem;
+  line-height: 1.75;
+  color: rgba(255, 248, 230, 0.82);
+  margin-bottom: 18px;
+}
+
+.sg-popup-section-title {
+  font-family: var(--font-ui, 'Cinzel', serif);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(255, 220, 80, 0.9);
+  text-shadow: 0 0 8px rgba(255,180,40,0.6);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.sg-popup-stars { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+.sg-popup-star-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 7px 10px;
+  background: rgba(20, 12, 0, 0.5);
+  border: 1px solid rgba(255, 160, 30, 0.15);
+  border-radius: 8px;
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.76rem;
+  color: rgba(255, 240, 200, 0.82);
+  line-height: 1.45;
+  transition: all 0.2s ease;
+}
+.sg-popup-star-row:hover {
+  border-color: rgba(255, 200, 60, 0.4);
+  background: rgba(50, 30, 0, 0.6);
+  color: rgba(255, 250, 230, 0.95);
+}
+.sg-popup-star-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe866, #cc6600);
+  box-shadow: 0 0 5px #ffaa33;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.sg-popup-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,160,30,0.15);
+}
+.sg-popup-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: rgba(25, 14, 0, 0.6);
+  border: 1px solid rgba(255, 170, 40, 0.2);
+  border-radius: 20px;
+  font-family: var(--font-ui, 'Cinzel', serif);
+  font-size: 0.58rem;
+  color: rgba(255, 225, 140, 0.8);
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 6px rgba(255,180,40,0.35);
+}
+
+/* ── Loading Screen ──────────────────────────────────────────── */
+.stargazer-loading {
+  position: absolute;
+  inset: 0;
+  background: #000208;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  transition: opacity 0.8s ease;
+}
+.stargazer-loading.fade-out { opacity: 0; pointer-events: none; }
+
+.sg-loading-icon { font-size: 3rem; margin-bottom: 16px; animation: sgPulse 2s ease-in-out infinite; }
+@keyframes sgPulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.95); filter: drop-shadow(0 0 4px rgba(255,180,40,0.4)); }
+  50%       { opacity: 1;   transform: scale(1.05); filter: drop-shadow(0 0 18px rgba(255,220,60,0.85)); }
+}
+.sg-loading-text {
+  font-family: var(--font-ui, 'Cinzel', serif);
+  font-size: 0.7rem;
+  color: rgba(255, 230, 150, 0.75);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  animation: bioGlowPulse 2.5s ease-in-out infinite;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sg-legend { display: none; }
+  .stargazer-controls { bottom: 16px; padding: 8px 14px; gap: 6px; }
+  .sg-btn { padding: 6px 10px; font-size: 0.6rem; }
+  .stargazer-info { bottom: 80px; left: 16px; }
+  .sg-popup { padding: 22px 18px 20px; }
+}

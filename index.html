@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OMAN — Open World Adventure & Mystery</title>
+  <meta name="description" content="Portal resmi OMAN RPG — sistem class, ras, leveling, ekonomi, faksi, quest, equipment, skill, dan kalkulator karakter." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="Map-style.css" />
+  <link rel="stylesheet" href="stargazer.css" />
+  <link rel="stylesheet" href="kalender-extra.css" />
+  <link rel="stylesheet" href="lore.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>" />
+</head>
+<body>
+
+<!-- SPACE CANVAS (background animated) -->
+<canvas id="space-canvas" aria-hidden="true"></canvas>
+
+<!-- LORE CANVAS (bonfire + fireflies + stars) -->
+<canvas id="lore-canvas" aria-hidden="true" style="display:none;position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+
+<div id="app">
+
+  <!-- ═══════════════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Navigasi Utama">
+    <div class="navbar-logo">
+      <img src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Lainlain/Logo%20Oman%20V2.png" alt="OMAN Logo" class="nav-logo-img" />
+      <span class="nav-logo-text">OMAN</span>
+    </div>
+    <div class="navbar-nav">
+      <button class="nav-btn active" data-page="home"      id="nav-home">HOME</button>
+      <button class="nav-btn"        data-page="class"     id="nav-class">CLASS</button>
+      <button class="nav-btn"        data-page="ras"       id="nav-ras">RAS</button>
+      <button class="nav-btn"        data-page="leveling"  id="nav-leveling">LEVELING</button>
+      <button class="nav-btn"        data-page="ekonomi"   id="nav-ekonomi">EKONOMI</button>
+      <button class="nav-btn"        data-page="faksi"     id="nav-faksi">FAKSI</button>
+      <button class="nav-btn"        data-page="quest"     id="nav-quest">QUEST</button>
+      <button class="nav-btn"        data-page="equipment" id="nav-equipment">EQUIPMENT</button>
+      <button class="nav-btn"        data-page="peta"      id="nav-peta">🗺️ PETA</button>
+      <button class="nav-btn"        data-page="skill"     id="nav-skill">SKILL</button>
+      <button class="nav-btn"        data-page="battle"    id="nav-battle">⚔️ BATTLE</button>
+      <button class="nav-btn"        data-page="kalkulator"id="nav-kalkulator">KALKULATOR</button>
+      <button class="nav-btn"        data-page="bintang"   id="nav-bintang">🌌 BINTANG</button>
+      <button class="nav-btn"        data-page="kalender"  id="nav-kalender">📅 KALENDER</button>
+      <button class="nav-btn"        data-page="lore"      id="nav-lore">📖 LORE</button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: HOME
+  ═══════════════════════════════════════════════════ -->
+  <section class="page active" id="page-home" role="main">
+    <!-- Hero -->
+    <div class="hero">
+
+      <!-- Custom Logo (isi URL logo kamu di bawah) -->
+      <div class="hero-logo-wrap" id="hero-logo-wrap">
+        <div class="hero-logo-glow"></div>
+        <img
+          src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Lainlain/Logo%20Oman%20V2.png"
+          alt="OMAN Logo"
+          class="hero-logo-img"
+          id="hero-logo-img"
+          onerror="this.parentElement.style.display='none'"
+        />
+      </div>
+
+      <div class="hero-badge">✦ ROLEPLAY ✦ FANTASY ✦ MEDIEVAL ✦</div>
+      <h1 class="hero-title">Welcome to OMAN</span></h1>
+      <p class="hero-subtitle">Petualangan epik menunggumu — pilih class, ras, faksi, dan ukir legendamu sendiri di dunia fantasi penuh misteri.</p>
+      <div class="hero-cta">
+        <a href="https://chat.whatsapp.com/" target="_blank" rel="noopener" class="btn-primary" id="btn-join-wa">💬 Bergabung Sekarang</a>
+        <button class="btn-secondary" id="btn-explore" onclick="navigateTo('peta')">⚔️ Jelajahi Dunia</button>
+      </div>
+    </div>
+
+    <!-- Stats Band -->
+    <div class="stats-band">
+      <div class="stats-band-inner">
+        <div>
+          <span class="stat-counter-num" data-target="500" id="counter-member">0</span>
+          <span class="stat-counter-label">+ MEMBER AKTIF</span>
+        </div>
+        <div>
+          <span class="stat-counter-num" data-target="5" id="counter-class">0</span>
+          <span class="stat-counter-label">CLASS TERSEDIA saat ini</span>
+        </div>
+        <div>
+          <span class="stat-counter-num" data-target="7" id="counter-ras">0</span>
+          <span class="stat-counter-label">RAS TERSEDIA saat ini</span>
+        </div>
+        <div>
+          <span class="stat-counter-num" data-target="7" id="counter-faksi">0</span>
+          <span class="stat-counter-label">FAKSI & WILAYAH</span>
+        </div>
+        <div>
+          <span class="stat-counter-num" data-target="100" id="counter-quest">0</span>
+          <span class="stat-counter-label">+ QUEST AKTIF</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content section -->
+    <div class="section">
+      <!-- Overview Cards -->
+      <div class="home-section-label">
+        <span class="home-section-label-text">JELAJAHI DUNIA OMAN</span>
+      </div>
+      <div class="overview-cards">
+        <div class="overview-card" onclick="navigateTo('class')" id="card-class">
+          <div class="overview-card-icon">⚔️</div>
+          <div class="overview-card-title">CLASS SYSTEM</div>
+          <div class="overview-card-desc">5 class unik — Warrior, Mage, Archer, Priest, Guardian</div>
+        </div>
+        <div class="overview-card" onclick="navigateTo('ras')" id="card-ras">
+          <div class="overview-card-icon">🧬</div>
+          <div class="overview-card-title">RAS SYSTEM</div>
+          <div class="overview-card-desc">10 ras dengan trait dan bonus stat berbeda</div>
+        </div>
+        <div class="overview-card" onclick="navigateTo('leveling')" id="card-leveling">
+          <div class="overview-card-icon">📈</div>
+          <div class="overview-card-title">LEVELING</div>
+          <div class="overview-card-desc">Level 1–100 dengan rank dan unlock bertahap</div>
+        </div>
+        <div class="overview-card" onclick="navigateTo('ekonomi')" id="card-ekonomi">
+          <div class="overview-card-icon">💰</div>
+          <div class="overview-card-title">EKONOMI</div>
+          <div class="overview-card-desc">Mata uang Zen, tier kekayaan, dan pasar bebas</div>
+        </div>
+      </div>
+
+      <!-- RA World Clock -->
+      <div class="ra-clock-section" id="ra-clock-section">
+        <div class="home-section-label" style="margin-bottom: 32px;">
+          <span class="home-section-label-text">⏰ WAKTU DUNIA OMAN</span>
+        </div>
+
+        <!-- Main clock display -->
+        <div class="ra-clock-main" id="ra-clock-main">
+          <div class="ra-clock-header">✦ OMAN WORLD TIME — KALENDER RA ✦</div>
+
+          <!-- Digital Clock -->
+          <div class="ra-digital-clock" id="ra-digital-clock">
+            <div class="ra-time-block">
+              <div class="ra-time-digits" id="ra-hours">00</div>
+              <div class="ra-time-label">JAM</div>
+            </div>
+            <div class="ra-time-sep">:</div>
+            <div class="ra-time-block">
+              <div class="ra-time-digits" id="ra-minutes">00</div>
+              <div class="ra-time-label">MENIT</div>
+            </div>
+            <div class="ra-time-sep">:</div>
+            <div class="ra-time-block">
+              <div class="ra-time-digits" id="ra-seconds">00</div>
+              <div class="ra-time-label">DETIK</div>
+            </div>
+          </div>
+
+          <!-- Date & Day -->
+          <div class="ra-date-display" id="ra-date-display">
+            Yawm al-Zuhrah, 20 Mizanun
+          </div>
+          <div class="ra-date-year" id="ra-date-year">Tahun 2500 RA ✦ Era Bintang</div>
+          <div class="ra-month-meaning" id="ra-month-meaning">Mizanun — Neraca Langit</div>
+        </div>
+
+      </div>
+
+      <!-- Join Section -->
+      <div class="join-section" id="join-section">
+        <div class="home-section-label" style="margin-bottom: 32px;">
+          <span class="home-section-label-text">🚀 CARA BERGABUNG</span>
+        </div>
+        <div class="join-steps">
+          <div class="join-step" id="join-step-1">
+            <div class="join-step-num">01</div>
+            <div class="join-step-title">Masuk Grup WhatsApp</div>
+            <div class="join-step-desc">Klik link undangan dan masuk ke grup utama OMAN RPG.</div>
+          </div>
+          <div class="join-step" id="join-step-2">
+            <div class="join-step-num">02</div>
+            <div class="join-step-title">Buat Karakter</div>
+            <div class="join-step-desc">Pilih Ras & Class favoritmu menggunakan Kalkulator Karakter di website ini.</div>
+          </div>
+          <div class="join-step" id="join-step-3">
+            <div class="join-step-num">03</div>
+            <div class="join-step-title">Mulai Petualangan</div>
+            <div class="join-step-desc">Bergabung dengan faksi, ikuti quest, dan tulis legendamu!</div>
+          </div>
+        </div>
+        <div class="text-center" style="margin-top: 40px;">
+          <a href="https://chat.whatsapp.com/" target="_blank" rel="noopener" class="btn-primary" id="btn-join-bottom">
+            💬 Gabung Grup WhatsApp
+          </a>
+        </div>
+      </div>
+    </div><!-- /section -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: CLASS
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-class">
+    <!-- Class Hero Header -->
+    <div class="page-hero" id="class-page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">⚔</div>
+        <h2 class="page-hero-title">CLASS SYSTEM</h2>
+        <p class="page-hero-sub">Pilih jalanmu sebagai petualang</p>
+      </div>
+    </div>
+    <!-- Class Tabs -->
+    <div class="class-tabs-bar" id="class-tabs-bar">
+      <div class="class-tabs-inner" id="class-tabs">
+        <button class="class-tab-btn active" data-class="warrior"  id="tab-class-warrior">Warrior</button>
+        <button class="class-tab-btn"        data-class="mage"     id="tab-class-mage">Mage</button>
+        <button class="class-tab-btn"        data-class="archer"   id="tab-class-archer">Archer</button>
+        <button class="class-tab-btn"        data-class="priest"   id="tab-class-priest">Priest</button>
+        <button class="class-tab-btn"        data-class="guardian" id="tab-class-guardian">Guardian</button>
+        <button class="class-tab-btn disabled" id="tab-class-coming">Coming Soon</button>
+      </div>
+    </div>
+    <!-- Class Content -->
+    <div class="class-page-body">
+      <div id="class-display-area"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: RAS
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-ras">
+    <div class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">🧬</div>
+        <h2 class="page-hero-title">RAS SYSTEM</h2>
+        <p class="page-hero-sub">10 ras unik dengan trait dan bonus stat berbeda</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="race-grid" id="race-grid"></div>
+      <div id="race-detail-area" style="margin-top: 32px;"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: LEVELING
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-leveling">
+    <div class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">📈</div>
+        <h2 class="page-hero-title">LEVELING SYSTEM</h2>
+        <p class="page-hero-sub">Tumbuh dari Pendatang hingga OMEGA — Level 1 sampai 100</p>
+      </div>
+    </div>
+    <div class="section">
+
+      <!-- EXP Sources -->
+      <div class="grid-4 mb-32">
+        <div class="card text-center">
+          <div style="font-size:2rem; margin-bottom:10px;">📜</div>
+          <div style="font-family: var(--font-ui); font-size:0.75rem; font-weight:700; color:var(--text-bright); margin-bottom:6px;">QUEST</div>
+          <div style="font-size:0.78rem; color:var(--text-dim);">Selesaikan quest harian & mingguan</div>
+        </div>
+        <div class="card text-center">
+          <div style="font-size:2rem; margin-bottom:10px;">⚔️</div>
+          <div style="font-family: var(--font-ui); font-size:0.75rem; font-weight:700; color:var(--text-bright); margin-bottom:6px;">PVP & DUNGEON</div>
+          <div style="font-size:0.78rem; color:var(--text-dim);">Menang PvP dan clear dungeon</div>
+        </div>
+        <div class="card text-center">
+          <div style="font-size:2rem; margin-bottom:10px;">🎭</div>
+          <div style="font-family: var(--font-ui); font-size:0.75rem; font-weight:700; color:var(--text-bright); margin-bottom:6px;">ROLEPLAY AKTIF</div>
+          <div style="font-size:0.78rem; color:var(--text-dim);">Aktif bercerita dan berinteraksi</div>
+        </div>
+        <div class="card text-center">
+          <div style="font-size:2rem; margin-bottom:10px;">🏰</div>
+          <div style="font-family: var(--font-ui); font-size:0.75rem; font-weight:700; color:var(--text-bright); margin-bottom:6px;">GUILD EVENT</div>
+          <div style="font-size:0.78rem; color:var(--text-dim);">Partisipasi event guild</div>
+        </div>
+      </div>
+
+      <!-- Level Table -->
+      <div class="card" style="padding:0; overflow:hidden;">
+        <div style="padding:20px 24px; border-bottom:1px solid var(--dark-border);">
+          <div style="font-family:var(--font-ui); font-size:0.75rem; font-weight:700; color:var(--gold); letter-spacing:0.1em;">TABEL SCALING STAT PER LEVEL — RAS</div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="level-table">
+            <thead>
+              <tr>
+                <th>RAS</th>
+                <th>+HP/LEVEL</th>
+                <th>+MP/LEVEL</th>
+              </tr>
+            </thead>
+            <tbody id="level-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Benefits -->
+      <div class="grid-4 mt-32">
+        <div class="card text-center">
+          <div style="font-size:2rem;margin-bottom:10px;">🗺️</div>
+          <div style="font-family:var(--font-ui);font-size:0.75rem;font-weight:700;color:var(--gold);margin-bottom:8px;">AREA BARU</div>
+          <div style="font-size:0.78rem;color:var(--text-dim);">Buka zona dan dungeon yang lebih menantang</div>
+        </div>
+        <div class="card text-center">
+          <div style="font-size:2rem;margin-bottom:10px;">📊</div>
+          <div style="font-family:var(--font-ui);font-size:0.75rem;font-weight:700;color:var(--gold);margin-bottom:8px;">STAT BOOST</div>
+          <div style="font-size:0.78rem;color:var(--text-dim);">Dapatkan poin stat untuk alokasi bebas</div>
+        </div>
+        <div class="card text-center">
+          <div style="font-size:2rem;margin-bottom:10px;">✨</div>
+          <div style="font-family:var(--font-ui);font-size:0.75rem;font-weight:700;color:var(--gold);margin-bottom:8px;">SKILL BARU</div>
+          <div style="font-size:0.78rem;color:var(--text-dim);">Buka slot skill di level tertentu</div>
+        </div>
+        <div class="card text-center">
+          <div style="font-size:2rem;margin-bottom:10px;">🏆</div>
+          <div style="font-family:var(--font-ui);font-size:0.75rem;font-weight:700;color:var(--gold);margin-bottom:8px;">TITLE EKSKLUSIF</div>
+          <div style="font-size:0.78rem;color:var(--text-dim);">Dapatkan gelar bergengsi di level milestone</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: EKONOMI
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-ekonomi">
+    <div class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">💰</div>
+        <h2 class="page-hero-title">ECONOMY SYSTEM</h2>
+        <p class="page-hero-sub">Mata uang Zen menggerakkan roda perekonomian dunia OMAN</p>
+      </div>
+    </div>
+    <div class="section">
+      <div id="ekonomi-content"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: FAKSI
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-faksi">
+    <div class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">⚑</div>
+        <h2 class="page-hero-title">FACTION SYSTEM</h2>
+        <p class="page-hero-sub">7 faksi besar yang mewarnai politik dan petualangan di OMAN</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="tabs" id="faction-tabs"></div>
+      <div id="faction-display-area"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: QUEST
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-quest">
+    <div class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">📜</div>
+        <h2 class="page-hero-title">QUEST SYSTEM</h2>
+        <p class="page-hero-sub">Selesaikan quest — raih EXP, Zen, dan item langka</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="tabs" id="quest-tabs">
+        <button class="tab-btn active" data-quest="daily"   id="tab-quest-daily">📅 HARIAN</button>
+        <button class="tab-btn"        data-quest="weekly"  id="tab-quest-weekly">📆 MINGGUAN</button>
+        <button class="tab-btn"        data-quest="story"   id="tab-quest-story">📖 STORY QUEST</button>
+        <button class="tab-btn"        data-quest="guild"   id="tab-quest-guild">🏰 GUILD QUEST</button>
+      </div>
+      <div id="quest-display-area"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: EQUIPMENT
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-equipment">
+    <div class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">⚙</div>
+        <h2 class="page-hero-title">EQUIPMENT &amp; ITEM</h2>
+        <p class="page-hero-sub">5 tier rarity — dari Common hingga Legendary</p>
+      </div>
+    </div>
+    <div class="section">
+      <div id="equipment-content"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: PETA
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-peta">
+    <div class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">🗺</div>
+        <h2 class="page-hero-title">WORLD MAP</h2>
+        <p class="page-hero-sub">Jelajahi dunia OMAN — 7 faksi, wilayah misterius, kota epik</p>
+      </div>
+    </div>
+    <div class="section">
+
+      <!-- Map Tabs -->
+      <div class="map-tabs" id="map-tabs"></div>
+
+      <!-- Zoom Transition Overlay -->
+      <div class="map-zoom-overlay" id="map-zoom-overlay">
+        <div class="map-zoom-ripple" id="map-zoom-ripple"></div>
+        <div class="map-zoom-text" id="map-zoom-text">Menjelajahi wilayah...</div>
+      </div>
+
+      <!-- Map Display Container -->
+      <div class="map-display-container" id="map-display-container">
+
+        <!-- Map Header -->
+        <div class="map-header">
+          <div class="map-breadcrumb" id="map-breadcrumb">
+            <span class="breadcrumb-item active" id="breadcrumb-world">🌍 OMAN WORLD</span>
+          </div>
+          <button class="map-back-btn" id="map-back-btn" onclick="mapGoBack()" style="display:none">
+            ← Kembali ke Peta Dunia
+          </button>
+        </div>
+
+        <!-- Map Viewer (Image + Sidebar) -->
+        <div class="map-viewer">
+          <!-- Image Area -->
+          <div class="map-image-wrapper" id="map-image-wrapper">
+            <!-- Placeholder Grid Map (no image needed) -->
+            <div class="map-canvas-wrapper" id="map-canvas-wrapper">
+              <canvas id="map-canvas" class="map-canvas"></canvas>
+            </div>
+            <div class="map-overlay"></div>
+          </div>
+
+          <!-- Sidebar: Info + Legend -->
+          <div class="map-sidebar">
+            <div class="map-info-panel">
+              <div class="map-title" id="map-title">OMAN WORLD MAP</div>
+              <div class="map-subtitle" id="map-subtitle">Year 2500 RA — A Post-Apocalyptic World of Seven Factions</div>
+              <div class="map-legend" id="map-legend"></div>
+            </div>
+
+            <!-- Location List (for region maps) -->
+            <div class="map-locations-panel" id="map-locations-panel" style="display:none">
+              <div class="locations-header">📍 LOKASI</div>
+              <div class="locations-list" id="locations-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Region Cards Grid (world view) -->
+      <div id="map-regions-wrapper">
+        <div class="home-section-label" style="margin-bottom:20px; margin-top:8px">
+          <span class="home-section-label-text">⚑ KLIK WILAYAH UNTUK DETAIL</span>
+        </div>
+        <div class="map-regions-grid" id="map-regions-grid"></div>
+      </div>
+
+      <!-- Location Detail Panel (region view) -->
+      <div class="map-location-detail" id="map-location-detail" style="display:none"></div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: SKILL
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-skill">
+    <div class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">⚡</div>
+        <h2 class="page-hero-title">SKILL SYSTEM</h2>
+        <p class="page-hero-sub">8 slot skill — dari Nova hingga Signature Move Legendaris</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="tabs" id="skill-tabs">
+        <button class="tab-btn active" data-skill="system"  id="tab-skill-system">⚡ SKILL SYSTEM</button>
+        <button class="tab-btn"        data-skill="panduan" id="tab-skill-panduan">📖 PANDUAN BUAT SKILL</button>
+      </div>
+      <div id="skill-display-area"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: BATTLE
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-battle">
+    <div class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">⚔️</div>
+        <h2 class="page-hero-title">BATTLE SYSTEM</h2>
+        <p class="page-hero-sub">Sistem pertempuran berbasis grid square — taktik, terrain, dan elemen</p>
+      </div>
+    </div>
+    <div class="section" id="battle-content"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: KALKULATOR
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-kalkulator">
+    <div class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">⚔</div>
+        <h2 class="page-hero-title">KALKULATOR KARAKTER</h2>
+        <p class="page-hero-sub">Hitung, simulasikan, dan simpan stat karakter OMAN-mu</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="tabs" id="calc-tabs">
+        <button class="tab-btn active" data-calc="stat"   id="tab-calc-stat">📊 STAT KALKULATOR</button>
+        <button class="tab-btn"        data-calc="battle" id="tab-calc-battle">⚔️ BATTLE SIMULATOR</button>
+        <button class="tab-btn"        data-calc="list"   id="tab-calc-list">📋 DAFTAR KARAKTER</button>
+      </div>
+      <div id="calc-display-area"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: BINTANG (STARGAZER)
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-bintang">
+
+    <!-- Loading Screen -->
+    <div class="stargazer-loading" id="sg-loading">
+      <div class="sg-loading-icon">🌌</div>
+      <div class="sg-loading-text">Memuat Langit Malam...</div>
+    </div>
+
+    <div class="stargazer-container">
+
+      <!-- Canvas -->
+      <canvas id="stargazer-canvas"></canvas>
+
+      <!-- Header -->
+      <div class="stargazer-header">
+        <div>
+          <div class="stargazer-title"><span>✦</span>LANGIT MALAM OMAN</div>
+          <div class="stargazer-subtitle">YEAR 2500 RA — THE STARS ABOVE TELL OLD STORIES</div>
+        </div>
+      </div>
+
+      <!-- Tooltip -->
+      <div class="stargazer-tooltip" id="sg-tooltip">
+        <div class="tooltip-inner">
+          <div style="display:flex;align-items:center;margin-bottom:5px;">
+            <div class="tooltip-dot"></div>
+            <div class="tooltip-star-name">—</div>
+          </div>
+          <div class="tooltip-constellation">—</div>
+          <div class="tooltip-mag">—</div>
+        </div>
+      </div>
+
+      <!-- Constellation Legend (right panel) -->
+      <div class="sg-legend" id="sg-legend"></div>
+
+      <!-- Bottom Controls -->
+      <div class="stargazer-controls" id="sg-controls">
+        <!-- Auto Rotate -->
+        <button class="sg-btn" id="sg-btn-auto" title="Auto-rotate langit">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M14 8A6 6 0 1 1 2 8" stroke-linecap="round"/>
+            <path d="M14 4v4h-4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          AUTO
+        </button>
+
+        <div class="sg-divider"></div>
+
+        <!-- Constellation toggle -->
+        <button class="sg-btn active" id="sg-btn-const" title="Tampilkan/sembunyikan konstelasi">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="4" cy="4" r="1.5" fill="currentColor" stroke="none"/>
+            <circle cx="12" cy="3" r="1.5" fill="currentColor" stroke="none"/>
+            <circle cx="8" cy="9" r="1.5" fill="currentColor" stroke="none"/>
+            <circle cx="13" cy="11" r="1.5" fill="currentColor" stroke="none"/>
+            <circle cx="3" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+            <line x1="4" y1="4" x2="8" y2="9" stroke-width="1"/>
+            <line x1="12" y1="3" x2="8" y2="9" stroke-width="1"/>
+            <line x1="8" y1="9" x2="3" y2="12" stroke-width="1"/>
+            <line x1="8" y1="9" x2="13" y2="11" stroke-width="1"/>
+          </svg>
+          KONSTELASI
+        </button>
+
+        <div class="sg-divider"></div>
+
+        <!-- Zoom In -->
+        <button class="sg-btn" id="sg-btn-zoom-in" title="Zoom in">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="7" cy="7" r="5"/>
+            <line x1="11" y1="11" x2="14" y2="14" stroke-linecap="round"/>
+            <line x1="7" y1="4.5" x2="7" y2="9.5" stroke-linecap="round"/>
+            <line x1="4.5" y1="7" x2="9.5" y2="7" stroke-linecap="round"/>
+          </svg>
+          ZOOM
+        </button>
+
+        <!-- Zoom Out -->
+        <button class="sg-btn" id="sg-btn-zoom-out" title="Zoom out">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="7" cy="7" r="5"/>
+            <line x1="11" y1="11" x2="14" y2="14" stroke-linecap="round"/>
+            <line x1="4.5" y1="7" x2="9.5" y2="7" stroke-linecap="round"/>
+          </svg>
+          KELUAR
+        </button>
+
+        <div class="sg-divider"></div>
+
+        <!-- Reset -->
+        <button class="sg-btn" id="sg-btn-reset" title="Reset tampilan">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 8a5 5 0 1 0 5-5" stroke-linecap="round"/>
+            <path d="M3 4v4h4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          RESET
+        </button>
+      </div>
+
+      <!-- Bottom-left info -->
+      <div class="stargazer-info">
+        <div class="stargazer-compass">↔ GESER UNTUK MEMUTAR LANGIT</div>
+        <div class="stargazer-hint">🌳 POHON SEBAGAI POROS DUNIA</div>
+      </div>
+
+    </div><!-- /.stargazer-container -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: KALENDER
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-kalender">
+    <div class="page-hero" id="kalender-page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">📅</div>
+        <h2 class="page-hero-title">Kalender RA</h2>
+        <p class="page-hero-sub">Waktu Dunia OMAN — Sistem Kalender Bintang RA</p>
+      </div>
+    </div>
+    <div class="section">
+
+      <!-- ══ KOTAK GAMBAR CUSTOM + KALENDER ══ -->
+      <div class="home-section-label" style="margin-bottom: 20px; margin-top: 20px;">
+        <span class="home-section-label-text">KALENDER PENANGGALAN TAHUN RA</span>
+      </div>
+      <div class="kal-custom-box" id="kal-custom-box">
+        <!-- Bagian atas: Gambar Custom (hanya bisa diubah oleh dev) -->
+        <div class="kal-custom-image-area" id="kal-custom-image-area">
+          <div class="kal-image-placeholder" id="kal-image-placeholder" style="cursor:default;">
+            <div class="kal-image-placeholder-icon">🖼️</div>
+            <div class="kal-image-placeholder-text">Gambar Bulan Ini</div>
+            <div class="kal-image-placeholder-sub">Belum ada gambar yang dipasang</div>
+          </div>
+          <img id="kal-custom-img" src="" alt="Gambar Custom" style="display:none;" />
+        </div>
+        <!-- Bagian bawah: Kalender Grid -->
+        <div class="kal-mini-calendar" id="kal-mini-calendar">
+          <div class="kal-mini-cal-header">
+            <div class="kal-mini-cal-symbol" id="kal-mini-symbol">⚖</div>
+            <div class="kal-mini-cal-title">
+              <div class="kal-mini-cal-month" id="kal-mini-month-name">—</div>
+              <div class="kal-mini-cal-year" id="kal-mini-year-label">—</div>
+            </div>
+          </div>
+          <div class="kal-mini-cal-grid" id="kal-mini-cal-grid">
+            <!-- Populated by JS -->
+          </div>
+          <!-- Tombol Detail Kalender -->
+          <div class="kal-detail-btn-wrap">
+            <button class="kal-detail-btn" id="kal-detail-btn">
+              <span class="kal-detail-btn-icon">✦</span>
+              Detail Kalender
+              <span class="kal-detail-btn-icon">✦</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Detail Kalender -->
+      <div class="kal-modal-overlay" id="kal-modal-overlay">
+        <div class="kal-modal" id="kal-modal">
+          <button class="kal-modal-close" id="kal-modal-close" title="Tutup">✕</button>
+          <div class="kal-modal-header">
+            <div class="kal-modal-title">📅 Detail Kalender RA</div>
+            <div class="kal-modal-sub">Sistem Penanggalan Dunia OMAN</div>
+          </div>
+          <!-- Tab -->
+          <div class="kal-modal-tabs">
+            <button class="kal-modal-tab active" data-tab="days">🌙 Nama Hari</button>
+            <button class="kal-modal-tab" data-tab="months">✦ Nama Bulan</button>
+          </div>
+          <!-- Panel: Hari -->
+          <div class="kal-modal-panel" id="kal-tab-days">
+            <div id="kal-modal-days-grid" class="kal-modal-days-grid"><!-- JS --></div>
+          </div>
+          <!-- Panel: Bulan -->
+          <div class="kal-modal-panel" id="kal-tab-months" style="display:none;">
+            <div id="kal-modal-months-grid" class="kal-modal-months-grid"><!-- JS --></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Musim Dunia OMAN -->
+      <!-- World Clock -->
+      <div class="ra-clock-section" id="kalender-clock-section">
+        <div class="home-section-label" style="margin-bottom: 20px;">
+          <span class="home-section-label-text">⏰ WAKTU DUNIA OMAN SEKARANG</span>
+        </div>
+        <div class="ra-clock-main" id="kal-clock-main">
+          <div class="ra-clock-header">✦ OMAN WORLD TIME — KALENDER RA ✦</div>
+          <div class="ra-digital-clock" id="kal-digital-clock">
+            <div class="ra-time-block">
+              <div class="ra-time-digits" id="kal-hours">00</div>
+              <div class="ra-time-label">JAM</div>
+            </div>
+            <div class="ra-time-sep">:</div>
+            <div class="ra-time-block">
+              <div class="ra-time-digits" id="kal-minutes">00</div>
+              <div class="ra-time-label">MENIT</div>
+            </div>
+            <div class="ra-time-sep">:</div>
+            <div class="ra-time-block">
+              <div class="ra-time-digits" id="kal-seconds">00</div>
+              <div class="ra-time-label">DETIK</div>
+            </div>
+          </div>
+          <div class="ra-date-display" id="kal-date-display">—</div>
+          <div class="ra-date-year" id="kal-date-year">—</div>
+          <div class="ra-month-meaning" id="kal-month-meaning">—</div>
+        </div><!-- /.ra-clock-main -->
+      </div><!-- /.ra-clock-section -->
+
+      <!-- Musim Dunia OMAN -->
+      <div class="home-section-label" style="margin-bottom: 20px; margin-top: 20px;">
+        <span class="home-section-label-text">🌿 MUSIM DUNIA OMAN</span>
+      </div>
+      <div id="ra-seasons-grid" class="ra-seasons-grid">
+        <!-- Populated by JS -->
+      </div>
+
+
+    </div><!-- /.section -->
+  </section>
+
+</div><!-- /#app -->
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE: LORE — KITAB LANGIT YANG KEHILANGAN BINTANG
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-lore">
+
+    <!-- ── BGM PLAYER WIDGET ──────────────────────────── -->
+    <div class="lore-bgm-bar lore-bgm-hidden" id="lore-bgm-bar">
+      <div class="lore-bgm-top">
+        <div class="lore-bgm-icon">🎵</div>
+        <div class="lore-bgm-info">
+          <div class="lore-bgm-title">Lore Ambience</div>
+          <div class="lore-bgm-sub">Kitab Langit yang Kehilangan Bintang</div>
+        </div>
+        <div class="lore-bgm-controls">
+          <div class="lore-bgm-status" title="Status audio"></div>
+          <button class="lore-bgm-btn" id="lore-bgm-play" title="Play / Pause" aria-label="Play Pause">
+            <svg id="lore-bgm-icon-play" viewBox="0 0 24 24" fill="currentColor" style="display:block">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg id="lore-bgm-icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+          </button>
+          <div class="lore-bgm-vol-wrap">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="lore-bgm-vol-icon">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+            <input type="range" class="lore-bgm-vol" id="lore-bgm-vol" min="0" max="100" value="60" aria-label="Volume">
+          </div>
+        </div>
+      </div>
+      <div class="lore-bgm-progress-wrap">
+        <div class="lore-bgm-progress-bar">
+          <div class="lore-bgm-progress-fill" id="lore-bgm-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lore-wrapper">
+
+      <!-- ── HERO ─────────────────────────────────────── -->
+      <div class="lore-hero">
+        <div class="lore-hero-ornament">✦ ✦ ✦</div>
+        <h1 class="lore-title">OMAN</h1>
+        <p class="lore-subtitle">Kitab Langit yang Kehilangan Bintang</p>
+        <div class="lore-tagline">"Di sini, bintang-bintang telah mati — tapi kematian bukanlah akhir."</div>
+        <div class="lore-hero-ornament">✦ ✦ ✦</div>
+        <nav class="lore-toc" aria-label="Daftar Isi">
+          <button class="lore-toc-btn" onclick="loreScroll('lore-prolog')">Prolog</button>
+          <button class="lore-toc-btn" onclick="loreScroll('lore-ch1')">I. Al-Thurayya</button>
+          <button class="lore-toc-btn" onclick="loreScroll('lore-ch2')">II. Kematian Pertama</button>
+          <button class="lore-toc-btn" onclick="loreScroll('lore-ch3')">III. Langit Sekarat</button>
+          <button class="lore-toc-btn" onclick="loreScroll('lore-ch4')">IV. Dosa</button>
+          <button class="lore-toc-btn" onclick="loreScroll('lore-ch5')">V. Malam Kejatuhan</button>
+          <button class="lore-toc-btn" onclick="loreScroll('lore-ch6')">VI. Tahun Nol</button>
+          <button class="lore-toc-btn" onclick="loreScroll('lore-ch7')">VII. Tujuh Faksi</button>
+          <button class="lore-toc-btn" onclick="loreScroll('lore-ch8')">VIII. Kosmologi</button>
+          <button class="lore-toc-btn" onclick="loreScroll('lore-ch9')">IX. Masa Kini</button>
+          <button class="lore-toc-btn" onclick="loreScroll('lore-epilog')">Epilog</button>
+        </nav>
+      </div>
+
+      <!-- ── PROLOG ─────────────────────────────────── -->
+      <article class="lore-chapter" id="lore-prolog">
+        <div class="lore-chapter-label">✦ Prolog</div>
+        <h2 class="lore-chapter-title">Undangan untuk Pengembara</h2>
+        <div class="lore-chapter-body">
+          <p>Duduklah, pengembara. Malam ini langit lebih gelap dari biasanya, dan angin membawa lebih banyak debu daripada cerita. Tapi kau beruntung — aku masih punya satu cerita tersisa, dan kau masih punya satu telinga untuk mendengar.</p>
+          <p>Lihat ke atas. Apa yang kau lihat?</p>
+          <p>Satu titik merah. Sendirian. Itu <strong>Ra</strong> — bintang terakhir yang masih menyala. Dahulu, sebelum kalender ini dimulai, sebelum kata "Oman" lahir dari bibir para pengungsi yang sekarat... langit ini penuh. Tujuh konstelasi agung bertahta di atas kita, masing-masing adalah makhluk hidup, kesadaran kosmik yang memandang dunia ini dengan kasih, dengan ingin tahu, dengan api yang tak pernah padam.</p>
+          <p>Mereka sudah tiada sekarang.</p>
+          <p class="lore-italic">Atau mungkin... mereka hanya tidak bersinar lagi.</p>
+        </div>
+      </article>
+
+      <!-- ── BAB I ───────────────────────────────────── -->
+      <article class="lore-chapter" id="lore-ch1">
+        <div class="lore-chapter-label">✦ Bab I</div>
+        <h2 class="lore-chapter-title">Al-Thurayya — Dunia di Bawah Tujuh Mahkota Cahaya</h2>
+        <div class="lore-chapter-body">
+          <p>Sebelum menjadi Oman, dunia ini bernama <strong>Al-Thurayya</strong> — "Bintang-Bintang yang Berkumpul." Nama itu bukan metafora. Ia adalah kenyataan.</p>
+          <p>Bayangkan langit malam yang tidak hitam, tapi biru keemasan karena cahaya tujuh konstelasi yang begitu terang. Tidak ada malam yang benar-benar gelap di Al-Thurayya. Setiap sudut dunia dipeluk oleh sinar dari atas, dan dari sinar itu, kehidupan lahir.</p>
+          <p>Air di Al-Thurayya tidak berasal dari awan. Ia turun sebagai <em>Starfall</em> — titik-titik cahaya yang jatuh perlahan dari langit, seperti salju bercahaya, mengembun menjadi air ketika menyentuh tanah. Meminumnya adalah menelan cahaya. Mandi di dalamnya adalah meremajakan Jiwa.</p>
+          <p>Enam ras — Human, Elf, Dark Elf, Wolfkin, Dwarf, Faeborn — hidup di bawah tujuh konstelasi yang masing-masing memiliki esensi, kehendak, dan karunia yang berbeda.</p>
+          <p>Mereka pikir itu akan abadi. <span class="lore-italic">Mereka salah.</span></p>
+        </div>
+        <div class="lore-constellation-grid">
+          <div class="lore-const-card" style="--cc:#ffe566"><div class="lore-const-icon">☀️</div><div class="lore-const-name">Al-Taj</div><div class="lore-const-epithet">Sang Mahkota</div><div class="lore-const-desc">Konstelasi keteraturan dan kekuasaan. Pusat dari tujuh. Cahayanya putih keemasan — fondasi hukum dan peradaban.</div></div>
+          <div class="lore-const-card" style="--cc:#9b7fd4"><div class="lore-const-icon">🌑</div><div class="lore-const-name">Al-Khafiy</div><div class="lore-const-epithet">Yang Tersembunyi</div><div class="lore-const-desc">Hanya ruang kosong di antara bintang. Saksi bisu yang menolak untuk disingkap. Misteri yang memilih untuk tidak bersinar.</div></div>
+          <div class="lore-const-card" style="--cc:#5ab4e4"><div class="lore-const-icon">🔷</div><div class="lore-const-name">Al-Hakim</div><div class="lore-const-epithet">Sang Bijak</div><div class="lore-const-desc">Bintang-bintangnya terus bergerak dan berubah pola, seolah menyampaikan pesan yang hanya bisa dibaca oleh mereka yang cukup sabar.</div></div>
+          <div class="lore-const-card" style="--cc:#5ec46a"><div class="lore-const-icon">🌿</div><div class="lore-const-name">Al-Umm</div><div class="lore-const-epithet">Sang Ibu</div><div class="lore-const-desc">Di bawah sinarnya, hutan tumbuh, sungai mengalir, dan tanah melahirkan buah tanpa henti. Wolfkin memanggilnya Ibu.</div></div>
+          <div class="lore-const-card" style="--cc:#e8a24a"><div class="lore-const-icon">⚙️</div><div class="lore-const-name">Al-Mitraqa</div><div class="lore-const-epithet">Sang Palu</div><div class="lore-const-desc">Percikan dari bintang-bintangnya adalah api pertama yang mengajarkan ras lain cara menempa logam. Jantung para pengrajin.</div></div>
+          <div class="lore-const-card" style="--cc:#e05c5c"><div class="lore-const-icon">❤️</div><div class="lore-const-name">Al-Dhabih</div><div class="lore-const-epithet">Sang Pengorbanan</div><div class="lore-const-desc">Bintang utamanya selalu merah darah. Ia adalah yang pertama rela menderita agar yang lain bisa bersinar.</div></div>
+          <div class="lore-const-card" style="--cc:#555577"><div class="lore-const-icon">🕳️</div><div class="lore-const-name">Al-Faragh</div><div class="lore-const-epithet">Kekosongan</div><div class="lore-const-desc">Hanya ruang hitam di langit. Tidak ada yang tahu esensinya. Hanya bahwa ia ada. Dan diam. Dan tetap ada sampai sekarang.</div></div>
+        </div>
+      </article>
+
+      <!-- ── BAB II ──────────────────────────────────── -->
+      <article class="lore-chapter" id="lore-ch2">
+        <div class="lore-chapter-label">✦ Bab II</div>
+        <h2 class="lore-chapter-title">Kematian Pertama</h2>
+        <div class="lore-chapter-body">
+          <p>Tidak ada yang tahu persis kapan konstelasi pertama mati. Tidak ada yang melihat momen tepatnya — karena kematiannya terjadi di siang hari, ketika cahaya Ra menutupi seluruh langit.</p>
+          <p>Tapi semua orang merasakannya.</p>
+          <p>Suatu sore, <em>Starfall</em> tiba-tiba berhenti di seluruh kuil yang didedikasikan untuk <strong>Al-Dhabih, Sang Pengorbanan</strong>. Kolam-kolam yang biasanya berkilau dengan cahaya merah lembut tiba-tiba menjadi air biasa — dingin, gelap, dan sunyi.</p>
+          <p>Ia tidak ada. Di tempat Al-Dhabih biasanya bersinar... hanya ada ketiadaan. Bukan ruang kosong biasa — tapi sesuatu yang lebih dalam. Seperti sepotong langit yang telah dihapus.</p>
+          <p class="lore-italic">Mereka tidak pernah menemukan jawabannya. Karena pembunuhan belum selesai.</p>
+        </div>
+      </article>
+
+      <!-- ── BAB III ─────────────────────────────────── -->
+      <article class="lore-chapter" id="lore-ch3">
+        <div class="lore-chapter-label">✦ Bab III</div>
+        <h2 class="lore-chapter-title">Langit yang Sekarat</h2>
+        <div class="lore-chapter-body">
+          <p>Dalam kurun waktu seratus tahun — sekejap mata dalam skala kosmik — tiga konstelasi lain menyusul.</p>
+          <p><strong>Al-Mitraqa, Sang Palu</strong>, mati berikutnya. Para Dwarf mendapati tempaan mereka dingin. Api Starfire tidak mau menyala lagi. Peralatan yang ditempa dengan berkah konstelasi mulai retak.</p>
+          <p><strong>Al-Umm, Sang Ibu</strong>, mati ketiga. Hutan-hutan mulai layu bukan dari daun, tapi dari akar. Bunga-bunga menutup kelopaknya dan tidak pernah membuka lagi. Para Wolfkin melolong ke langit malam — bukan sebagai ritual, tapi sebagai ratapan.</p>
+          <p><strong>Al-Hakim, Sang Bijak</strong>, mati keempat. Bintang-bintangnya bergerak membentuk pola peringatan. Atau ketakutan. Lalu semua padam bersamaan, seperti lilin yang ditiup.</p>
+          <p class="lore-italic">Tiga konstelasi tersisa: Al-Taj, Al-Khafiy, dan Al-Faragh. Dan dunia mulai mengering.</p>
+        </div>
+      </article>
+
+      <!-- ── BAB IV ──────────────────────────────────── -->
+      <article class="lore-chapter" id="lore-ch4">
+        <div class="lore-chapter-label">✦ Bab IV</div>
+        <h2 class="lore-chapter-title">Dosa yang Tidak Diketahui</h2>
+        <div class="lore-chapter-body">
+          <p>Inilah pertanyaan yang menghantui setiap cendekiawan, setiap pendeta, setiap orang tua yang menceritakan kisah ini pada anak-anak mereka sebelum tidur:</p>
+          <blockquote class="lore-quote">Kenapa konstelasi itu mati?</blockquote>
+          <p>Tidak ada yang tahu. Beberapa mengatakan konstelasi tidak mati — mereka dibunuh. Seseorang atau sesuatu, dari sudut galaksi yang tidak terjangkau, sedang memadamkan bintang-bintang satu per satu.</p>
+          <p>Yang lain percaya bahwa justru Al-Thurayya sendiri penyebabnya. Peradaban yang terlalu maju, sihir yang terlalu kuat, penggalian terlalu dalam ke inti planet untuk mencari <em>Star Core</em> — mungkin mereka memilih mati daripada menyaksikan anak-anak mereka menghancurkan diri sendiri.</p>
+          <p>Dan ada bisikan — bahwa satu dari konstelasi yang tersisa adalah pembunuhnya. Al-Taj yang angkuh? Al-Khafiy yang misterius? Atau Al-Faragh... yang dari awal tidak pernah bersinar?</p>
+          <p class="lore-italic">Tidak ada yang berani menjawab.</p>
+        </div>
+      </article>
+
+      <!-- ── BAB V ───────────────────────────────────── -->
+      <article class="lore-chapter" id="lore-ch5">
+        <div class="lore-chapter-label">✦ Bab V</div>
+        <h2 class="lore-chapter-title">Malam Kejatuhan</h2>
+        <div class="lore-chapter-body">
+          <p>Kematian konstelasi kelima adalah yang paling dikenang — karena ia disaksikan oleh seluruh dunia.</p>
+          <p><strong>Al-Khafiy, Yang Tersembunyi</strong> — konstelasi yang tidak pernah terlihat langsung — tiba-tiba terlihat. Di tempat yang biasanya hanya ada ruang kosong, kini ada sesuatu: cahaya redup, ungu kehitaman, berdenyut seperti jantung yang berdetak untuk terakhir kalinya.</p>
+          <p>Cahaya itu berdenyut sekali. Dua kali. Tiga kali. Lalu ia meledak. Gelombang hitam menyebar dari pusatnya, menelan bintang-bintang di sekitarnya. Selama beberapa detik, seluruh langit menjadi hitam total — bahkan Ra pun tidak terlihat.</p>
+          <p>Al-Thurayya menangis malam itu. Starfall terakhir turun bukan sebagai cahaya lembut, tapi sebagai hujan panas — air yang mendidih, berjatuhan dari langit seperti air mata kemarahan.</p>
+          <p class="lore-italic">Dua yang tersisa: Al-Taj dan Al-Faragh. Mahkota dan Kekosongan.</p>
+        </div>
+      </article>
+
+      <!-- ── BAB VI ──────────────────────────────────── -->
+      <article class="lore-chapter" id="lore-ch6">
+        <div class="lore-chapter-label">✦ Bab VI</div>
+        <h2 class="lore-chapter-title">Tahun Nol — Kelahiran Oman</h2>
+        <div class="lore-chapter-body">
+          <p>Al-Taj, Sang Mahkota, adalah konstelasi terkuat — pusat dari tujuh, yang pertama menyala di awal waktu. Selama kematian saudara-saudaranya, ia bertahan. Tapi semua orang tahu: ia juga akan mati.</p>
+          <p>Ketakutan itu menjadi kenyataan pada <strong>Malam Mahkota Patah</strong>. Al-Taj retak. Garis-garis cahaya di langit mulai terbelah. Potongan-potongan cahaya jatuh dari langit — bukan Starfall, tapi <em>Star Fragments</em>, pecahan konstelasi yang terbakar masuk ke atmosfer, menghantam gurun, menciptakan kawah-kawah raksasa.</p>
+          <p>Dan ketika pagi tiba... satu bintang dari Al-Taj masih menyala. Hanya satu — bintang pusatnya, yang paling tua. Ia berdiri sendirian di langit fajar, merah membara, seolah menahan sakit. Ia adalah <strong>Ra</strong> — sisa terakhir dari Al-Taj.</p>
+          <blockquote class="lore-quote">Tahun 0 Ra — tahun di mana hanya satu saksi yang tersisa di langit.</blockquote>
+          <p>Dan dunia yang telah hancur itu mereka beri nama baru: <strong class="lore-nameplate">OMAN — "Yang Tersisa."</strong></p>
+        </div>
+      </article>
+
+      <!-- ── BAB VII ─────────────────────────────────── -->
+      <article class="lore-chapter" id="lore-ch7">
+        <div class="lore-chapter-label">✦ Bab VII</div>
+        <h2 class="lore-chapter-title">Tujuh Faksi, Tujuh Luka</h2>
+        <div class="lore-chapter-body">
+          <p>Dalam kekacauan setelah kejatuhan, para penyintas terpecah — bukan karena ras atau wilayah, tapi karena hubungan spiritual mereka dengan konstelasi yang telah mati. Dari sinilah lahir <strong>Tujuh Faksi Oman</strong>.</p>
+        </div>
+        <div class="lore-faction-grid">
+          <div class="lore-faction-card" style="--fc:#ffe566"><div class="lore-faction-icon">☀️</div><div class="lore-faction-name">Aurelian Empire</div><div class="lore-faction-motto">"Cahaya Terakhir adalah Takhta Kami."</div><div class="lore-faction-desc">Pewaris Al-Taj. Membangun menara cermin raksasa untuk memantulkan cahaya ke Ra. Kasta: The Radiant, The Shimmering, The Dimming, The Lightless.</div></div>
+          <div class="lore-faction-card" style="--fc:#9b7fd4"><div class="lore-faction-icon">🌑</div><div class="lore-faction-name">Shadow Covenant</div><div class="lore-faction-motto">"Kami Menanti Malam yang Sempurna."</div><div class="lore-faction-desc">Pelayat Al-Khafiy. Percaya cahaya adalah ikatan, kegelapan adalah kebebasan. Mereka memadamkan semua lampu dalam ritual Hening Malam.</div></div>
+          <div class="lore-faction-card" style="--fc:#5ab4e4"><div class="lore-faction-icon">🔷</div><div class="lore-faction-name">Arcane Consortium</div><div class="lore-faction-motto">"Bintang Bisa Direkayasa."</div><div class="lore-faction-desc">Pencari Al-Hakim. Meneliti Star Chart kuno dan menjalankan Project Al-Thurayya — upaya menciptakan konstelasi buatan di laboratorium.</div></div>
+          <div class="lore-faction-card" style="--fc:#5ec46a"><div class="lore-faction-icon">🌿</div><div class="lore-faction-name">Wildlands Pact</div><div class="lore-faction-motto">"Kami Mendengar Tangisan Bumi dan Bintang."</div><div class="lore-faction-desc">Anak-anak Al-Umm. Setiap pohon yang mereka tanam adalah antena ke langit: "Kami sudah berubah. Pulanglah." Menolak senjata logam.</div></div>
+          <div class="lore-faction-card" style="--fc:#e8a24a"><div class="lore-faction-icon">⚙️</div><div class="lore-faction-name">Ironforge Guild</div><div class="lore-faction-motto">"Bintang adalah Mesin. Mesin Bisa Diperbaiki."</div><div class="lore-faction-desc">Penerus Al-Mitraqa. Membangun The Ascension Engine — menara yang dirancang mencapai langit untuk menyalakan kembali konstelasi secara manual.</div></div>
+          <div class="lore-faction-card" style="--fc:#e05c5c"><div class="lore-faction-icon">❤️</div><div class="lore-faction-name">Crimson Crusade</div><div class="lore-faction-motto">"Hanya Darah yang Bisa Menyalakan Kembali Api Kosmik."</div><div class="lore-faction-desc">Pemuja Al-Dhabih. Ritual Star Bleeding: menyumbangkan darah ke Sumur Pengorbanan agar Ra tetap menyala. Mereka tidak kejam — mereka putus asa.</div></div>
+          <div class="lore-faction-card" style="--fc:#555577"><div class="lore-faction-icon">🕳️</div><div class="lore-faction-name">Void Council</div><div class="lore-faction-motto">"Kami Mendengar Bintang yang Telah Mati... dan Mereka Masih Berbisik."</div><div class="lore-faction-desc">Penjaga Al-Faragh. Mereka tahu kenapa konstelasi mati. Dan mereka memilih untuk tidak memberitahu siapa pun.</div></div>
+        </div>
+      </article>
+
+      <!-- ── BAB VIII ────────────────────────────────── -->
+      <article class="lore-chapter" id="lore-ch8">
+        <div class="lore-chapter-label">✦ Bab VIII</div>
+        <h2 class="lore-chapter-title">Kosmologi dan Kekuatan</h2>
+        <div class="lore-chapter-body">
+          <h3 class="lore-h3">Starwater — Darah Bintang</h3>
+          <p>Air di Oman bukan H₂O biasa. Ia adalah cahaya konstelasi yang mengembun. Setiap oasis membawa "rasa" dari konstelasi yang menciptakannya. Starwater Aurelian terasa hangat dan teratur. Starwater Void... tidak berasa sama sekali. Seperti meminum keheningan. Seperti menelan rahasia.</p>
+          <h3 class="lore-h3">Zen — Kristal Bintang</h3>
+          <p>Zen adalah kristalisasi Starwater murni — atau kristalisasi emosi intens dari Jiwa. Jiwa sendiri adalah serpihan bintang yang terperangkap dalam tubuh. Itulah sebabnya emosi kuat bisa menciptakan Zen.</p>
+          <div class="lore-zen-pills">
+            <div class="lore-zen-pill" style="--zc:#ffc533">✦ Zen Murni — emas seperti sinar Ra</div>
+            <div class="lore-zen-pill" style="--zc:#d0d0d0">✦ Zen Kabur — putih susu</div>
+            <div class="lore-zen-pill" style="--zc:#6b4f8e">✦ Zen Gelap — ungu kehitaman seperti nebula mati</div>
+          </div>
+          <h3 class="lore-h3">Tiga Jalan Sihir</h3>
+          <div class="lore-magic-paths">
+            <div class="lore-magic-card"><div class="lore-magic-name">Star Weaving</div><div class="lore-magic-sub">(Soul Weaving)</div><div class="lore-magic-desc">Membakar Jiwa sendiri. Risiko: menjadi <em>Hollow</em>, tubuh tanpa cahaya internal.</div></div>
+            <div class="lore-magic-card"><div class="lore-magic-name">Zen Shaping</div><div class="lore-magic-desc">Menghancurkan kristal Zen untuk melepaskan energi. Aman bagi Jiwa, tapi Zen terbatas.</div></div>
+            <div class="lore-magic-card"><div class="lore-magic-name">Void Channeling</div><div class="lore-magic-desc">Meminjam energi dari Dark Stars. Kekuatan tak terbatas, tapi Void selalu mengambil lebih banyak daripada yang ia berikan.</div></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── BAB IX ──────────────────────────────────── -->
+      <article class="lore-chapter" id="lore-ch9">
+        <div class="lore-chapter-label">✦ Bab IX</div>
+        <h2 class="lore-chapter-title">Oman Hari Ini — Tahun 2500 Ra</h2>
+        <div class="lore-chapter-body">
+          <p>2500 tahun telah berlalu sejak Malam Mahkota Patah. The Great Desiccation terus berlanjut. Starfall hampir tidak pernah terjadi. Oasis menyusut setiap tahun. Tujuh faksi bertahan dalam perdamaian rapuh — The Second Oath melarang perang terbuka.</p>
+          <p>Dan kemudian... sesuatu terjadi. Seorang pelancong ditemukan di perbatasan gurun. Tubuhnya setengah terkubur pasir. Di tangannya... ada sekantong air. Air itu bercahaya — tujuh warna, berlapis-lapis, seperti miniatur langit Al-Thurayya.</p>
+          <p>Air itu adalah Starwater murni dari semua tujuh konstelasi. Termasuk yang telah mati. Termasuk yang telah lenyap selama ribuan tahun.</p>
+          <blockquote class="lore-quote">"Aku menemukannya... di bawah pasir hitam... masih ada... mereka masih ada..."</blockquote>
+          <p><strong>The Last Aquifer.</strong> Bukan sekadar air. Tapi mungkin lokasi di mana konstelasi yang mati masih bersinar. Semua faksi mengirimkan agen terbaik mereka.</p>
+          <p class="lore-italic">Kau adalah salah satunya.</p>
+        </div>
+      </article>
+
+      <!-- ── EPILOG ──────────────────────────────────── -->
+      <article class="lore-chapter lore-chapter--epilog" id="lore-epilog">
+        <div class="lore-chapter-label">✦ Epilog</div>
+        <h2 class="lore-chapter-title">Malam Ketujuh</h2>
+        <div class="lore-chapter-body">
+          <p>Malam ini, kau bermimpi. Kau berdiri di padang pasir yang bukan pasir — tapi kaca hitam, halus, memantulkan langit. Di atasmu, tujuh konstelasi bersinar terang.</p>
+          <p>Mereka bersinar. Mereka hidup. Dan mereka berbicara — bukan dengan kata-kata, tapi dengan getaran di Jiwamu:</p>
+          <div class="lore-whispers">
+            <div class="lore-whisper">"Kami tidak pergi."</div>
+            <div class="lore-whisper">"Kami hanya tidak lagi bersinar."</div>
+            <div class="lore-whisper">"Temukan kami di tempat cahaya tidak bisa lolos."</div>
+            <div class="lore-whisper">"Temukan Al-Thurayya yang tersembunyi."</div>
+          </div>
+          <p>Kau mengambilnya. Dan kau terbangun.</p>
+          <hr class="lore-divider"/>
+          <p>Kau bukan satu-satunya. Di seluruh Oman, yang lain juga terbangun dengan benda di tangan mereka. Fragmen yang berbeda. Potongan yang berbeda. Jika disatukan... ke mana mereka akan menunjuk?</p>
+          <p>Di luar, Ra mulai terbit. Merah. Sendirian. Tapi pagi ini, untuk pertama kalinya dalam 2500 tahun, kau merasa Ra tidak sedih. Ra... menunggu.</p>
+        </div>
+        <div class="lore-closing">
+          <div class="lore-ornament-line">✦ ✦ ✦</div>
+          <p class="lore-closing-text">Minumlah, pengembara. Perjalananmu baru saja dimulai.</p>
+          <p class="lore-closing-big">Selamat datang di <strong>OMAN</strong>.</p>
+          <p class="lore-closing-sub">Di sini, bintang-bintang telah mati — tapi kematian bukanlah akhir.<br>Kadang, kematian hanyalah cara alam semesta menyimpan cahayanya...<br>untuk seseorang yang cukup berani mencarinya.</p>
+          <div class="lore-ornament-line">...dan malam ini, untuk pertama kalinya... bintang-bintang bermimpi tentangmu.</div>
+          <div class="lore-ornament-line">✦ ✦ ✦ ✦ ✦</div>
+          <div class="lore-closing-stamp">OMAN — Kitab Langit yang Kehilangan Bintang<br>Tahun 2500 Ra · The Last Aquifer awaits</div>
+        </div>
+      </article>
+
+    </div><!-- /.lore-wrapper -->
+  </section>
+
+</div><!-- /#app -->
+
+<!-- Backsound Tab Bintang -->
+<audio id="bgm-bintang" preload="auto">
+  <source src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Audio/starfield_romance1%20(1).ogg" type="audio/ogg">
+</audio>
+
+<!-- Backsound Tab Lore — ganti URL dengan file audio dari Supabase kamu -->
+<audio id="bgm-lore" preload="auto" loop>
+  <source src="GANTI_DENGAN_URL_SUPABASE_KAMU.ogg" type="audio/ogg">
+  <source src="GANTI_DENGAN_URL_SUPABASE_KAMU.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="data.js"></script>
+<script src="Map-data.js"></script>
+<script src="main.js"></script>
+<script src="map.js"></script>
+<script src="calculator.js"></script>
+<script src="stargazer.js"></script>
+<script src="lore.js"></script>
+</body>
+</html>

@@ -1,0 +1,563 @@
+/* ================================================================
+   KALENDER EXTRA — Musim, Mini Calendar, Custom Image Box
+   Tambahkan ke styles.css atau import terpisah
+   ================================================================ */
+
+/* ── KOTAK BESAR: GAMBAR + KALENDER ─────────────────────────── */
+.kal-custom-box {
+  display: flex;
+  flex-direction: column;
+  background: rgba(10, 12, 20, 0.85);
+  border: 1px solid rgba(212, 168, 67, 0.25);
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 700px;
+  margin: 0 auto 48px;
+  box-shadow: 0 0 40px rgba(212, 168, 67, 0.08);
+}
+
+/* Bagian atas: Gambar Custom */
+.kal-custom-image-area {
+  position: relative;
+  width: 100%;
+  min-height: 360px;
+  background: rgba(20, 22, 35, 0.9);
+  border-bottom: 1px solid rgba(212, 168, 67, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.kal-custom-image-area #kal-custom-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  max-height: 400px;
+}
+
+/* Placeholder saat belum ada gambar */
+.kal-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 40px 24px;
+  text-align: center;
+  transition: background 0.2s;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  user-select: none;
+}
+.kal-image-placeholder:hover {
+  background: rgba(212, 168, 67, 0.06);
+}
+.kal-image-placeholder.drag-over {
+  background: rgba(212, 168, 67, 0.12);
+  outline: 2px dashed rgba(212, 168, 67, 0.5);
+}
+.kal-image-placeholder-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+.kal-image-placeholder-text {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+  color: rgba(212, 168, 67, 0.7);
+  letter-spacing: 0.05em;
+}
+.kal-image-placeholder-sub {
+  font-size: 0.72rem;
+  color: rgba(200, 190, 170, 0.4);
+  font-family: 'Crimson Text', serif;
+}
+
+/* Tombol hapus gambar */
+.kal-img-remove-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(10, 10, 15, 0.85);
+  border: 1px solid rgba(212, 168, 67, 0.4);
+  color: rgba(212, 168, 67, 0.9);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.15s;
+  z-index: 5;
+}
+.kal-img-remove-btn:hover {
+  background: rgba(180, 50, 50, 0.7);
+  transform: scale(1.1);
+}
+
+/* ── Bagian bawah: Mini Calendar ────────────────────────────── */
+.kal-mini-calendar {
+  padding: 20px 20px 24px;
+  background: rgba(8, 10, 18, 0.6);
+}
+
+.kal-mini-cal-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(212, 168, 67, 0.15);
+}
+
+.kal-mini-cal-symbol {
+  font-size: 1.8rem;
+  color: #d4a843;
+  line-height: 1;
+}
+
+.kal-mini-cal-month {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.75rem;
+  color: #d4a843;
+  letter-spacing: 0.05em;
+}
+
+.kal-mini-cal-year {
+  font-size: 0.78rem;
+  color: rgba(200, 190, 170, 0.6);
+  font-family: 'Crimson Text', serif;
+  margin-top: 4px;
+}
+
+.kal-mini-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.kal-mini-day-hdr {
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.42rem;
+  color: rgba(212, 168, 67, 0.7);
+  padding: 4px 2px;
+  letter-spacing: 0.03em;
+}
+
+.kal-mini-cell {
+  text-align: center;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.88rem;
+  color: rgba(220, 210, 190, 0.85);
+  padding: 5px 2px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  cursor: default;
+}
+.kal-mini-cell:hover {
+  background: rgba(212, 168, 67, 0.08);
+}
+.kal-mini-cell.other {
+  color: rgba(200, 190, 170, 0.25);
+}
+.kal-mini-cell.today {
+  background: rgba(212, 168, 67, 0.2);
+  color: #ffd966;
+  font-weight: 700;
+  border: 1px solid rgba(212, 168, 67, 0.5);
+  border-radius: 6px;
+}
+
+/* ── MUSIM ────────────────────────────────────────────────── */
+.ra-seasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.ra-season-card {
+  position: relative;
+  background: rgba(10, 12, 20, 0.7);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 24px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.ra-season-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.ra-season-card.current-season {
+  box-shadow: 0 0 20px rgba(212, 168, 67, 0.15);
+}
+
+.ra-season-now-badge {
+  position: absolute;
+  top: -1px;
+  right: 14px;
+  font-family: 'Cascadia Code', bold;
+  font-size: 0.62rem;
+  color: #0a0c14;
+  padding: 4px 10px;
+  border-radius: 0 0 8px 8px;
+  letter-spacing: 0.05em;
+}
+
+.ra-season-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.ra-season-name {
+  font-family: 'Cascadia Code', bold;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+}
+
+.ra-season-name-en {
+  font-family: 'Cascadia Code', bold;
+  font-size: 0.65rem;
+  font-style: italic;
+  opacity: 0.7;
+  margin-top: -6px;
+}
+
+.ra-season-months {
+  font-family: 'Cascadia Code', bold;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  opacity: 0.8;
+}
+
+.ra-season-desc {
+  font-family: 'Cascadia Code', bold;
+  font-size: 0.92rem;
+  color: rgba(220, 210, 190, 0.75);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.ra-season-effect {
+  font-family: 'Cascadia Code', bold;
+  font-size: 0.82rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: rgba(0,0,0,0.2);
+  line-height: 1.5;
+}
+
+/* ── Responsif ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .kal-custom-box {
+    border-radius: 12px;
+  }
+  .kal-custom-image-area {
+    min-height: 200px;
+  }
+  .ra-seasons-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 420px) {
+  .ra-seasons-grid {
+    grid-template-columns: 1fr;
+  }
+  .kal-mini-day-hdr {
+    font-size: 0.35rem;
+  }
+}
+
+/* ── GLOW pada kotak kalender ────────────────────────────── */
+.kal-custom-box {
+  border-color: rgba(212, 168, 67, 0.45);
+  box-shadow:
+    0 0 18px rgba(212, 168, 67, 0.18),
+    0 0 48px rgba(212, 168, 67, 0.10),
+    inset 0 0 24px rgba(212, 168, 67, 0.04);
+  animation: kal-glow-pulse 3.5s ease-in-out infinite;
+}
+@keyframes kal-glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 18px rgba(212, 168, 67, 0.18),
+      0 0 48px rgba(212, 168, 67, 0.10),
+      inset 0 0 24px rgba(212, 168, 67, 0.04);
+  }
+  50% {
+    box-shadow:
+      0 0 28px rgba(212, 168, 67, 0.30),
+      0 0 72px rgba(212, 168, 67, 0.16),
+      inset 0 0 32px rgba(212, 168, 67, 0.08);
+  }
+}
+
+.kal-mini-cell.today {
+  box-shadow: 0 0 10px rgba(212, 168, 67, 0.55), 0 0 22px rgba(212, 168, 67, 0.25);
+  animation: kal-today-glow 2s ease-in-out infinite;
+}
+@keyframes kal-today-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(212, 168, 67, 0.5), 0 0 20px rgba(212, 168, 67, 0.2); }
+  50%       { box-shadow: 0 0 16px rgba(212, 168, 67, 0.8), 0 0 36px rgba(212, 168, 67, 0.35); }
+}
+
+/* ── Tombol Detail Kalender ──────────────────────────────── */
+.kal-detail-btn-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(212, 168, 67, 0.12);
+}
+
+.kal-detail-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  color: #d4a843;
+  background: rgba(212, 168, 67, 0.06);
+  border: 1px solid rgba(212, 168, 67, 0.35);
+  border-radius: 30px;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.kal-detail-btn:hover {
+  background: rgba(212, 168, 67, 0.13);
+  box-shadow: 0 0 18px rgba(212, 168, 67, 0.25);
+  transform: translateY(-1px);
+}
+.kal-detail-btn-icon {
+  font-size: 0.65rem;
+  opacity: 0.7;
+}
+
+/* ── Modal Detail Kalender ───────────────────────────────── */
+.kal-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 4, 10, 0.82);
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+}
+.kal-modal-overlay.open {
+  display: flex;
+}
+
+.kal-modal {
+  position: relative;
+  background: rgba(8, 10, 20, 0.97);
+  border: 1px solid rgba(212, 168, 67, 0.4);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 32px 28px 28px;
+  box-shadow: 0 0 60px rgba(212, 168, 67, 0.2), 0 0 120px rgba(212, 168, 67, 0.08);
+  animation: kal-modal-in 0.22s ease;
+}
+@keyframes kal-modal-in {
+  from { opacity: 0; transform: scale(0.94) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.kal-modal-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  background: transparent;
+  border: 1px solid rgba(212, 168, 67, 0.3);
+  border-radius: 50%;
+  width: 30px; height: 30px;
+  color: rgba(212, 168, 67, 0.8);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.kal-modal-close:hover { background: rgba(180, 50, 50, 0.5); }
+
+.kal-modal-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.kal-modal-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.75rem;
+  color: #d4a843;
+  letter-spacing: 0.06em;
+}
+.kal-modal-sub {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.9rem;
+  color: rgba(200, 190, 170, 0.55);
+  margin-top: 6px;
+}
+
+/* Tab */
+.kal-modal-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(212, 168, 67, 0.15);
+  padding-bottom: 12px;
+}
+.kal-modal-tab {
+  flex: 1;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.48rem;
+  letter-spacing: 0.05em;
+  color: rgba(212, 168, 67, 0.55);
+  background: transparent;
+  border: 1px solid rgba(212, 168, 67, 0.2);
+  border-radius: 20px;
+  padding: 9px 14px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.kal-modal-tab.active,
+.kal-modal-tab:hover {
+  color: #d4a843;
+  background: rgba(212, 168, 67, 0.1);
+  border-color: rgba(212, 168, 67, 0.45);
+  box-shadow: 0 0 12px rgba(212, 168, 67, 0.15);
+}
+
+/* Panel hari */
+.kal-modal-days-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.kal-modal-day-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(212, 168, 67, 0.04);
+  border: 1px solid rgba(212, 168, 67, 0.12);
+  border-radius: 10px;
+  padding: 12px 16px;
+  transition: background 0.15s;
+}
+.kal-modal-day-row:hover { background: rgba(212, 168, 67, 0.08); }
+.kal-modal-day-num {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.45rem;
+  color: rgba(212, 168, 67, 0.5);
+  min-width: 18px;
+}
+.kal-modal-day-short {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.44rem;
+  color: #d4a843;
+  background: rgba(212, 168, 67, 0.1);
+  border: 1px solid rgba(212, 168, 67, 0.3);
+  border-radius: 5px;
+  padding: 4px 8px;
+  min-width: 38px;
+  text-align: center;
+}
+.kal-modal-day-info { flex: 1; }
+.kal-modal-day-name {
+  font-family: 'Crimson Text', serif;
+  font-size: 1rem;
+  color: rgba(220, 210, 190, 0.95);
+  font-style: italic;
+}
+.kal-modal-day-meaning {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.82rem;
+  color: rgba(200, 190, 170, 0.5);
+  margin-top: 2px;
+}
+.kal-modal-day-icon { font-size: 1.3rem; }
+
+/* Panel bulan */
+.kal-modal-months-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 480px) {
+  .kal-modal-months-grid { grid-template-columns: 1fr; }
+}
+.kal-modal-month-card {
+  background: rgba(212, 168, 67, 0.04);
+  border: 1px solid rgba(212, 168, 67, 0.15);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+.kal-modal-month-card:hover {
+  background: rgba(212, 168, 67, 0.09);
+  box-shadow: 0 0 14px rgba(212, 168, 67, 0.12);
+}
+.kal-modal-month-card.active-month {
+  border-color: rgba(212, 168, 67, 0.5);
+  box-shadow: 0 0 16px rgba(212, 168, 67, 0.2);
+}
+.kal-modal-month-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.kal-modal-month-num {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.38rem;
+  color: rgba(212, 168, 67, 0.5);
+}
+.kal-modal-month-symbol { font-size: 1.1rem; }
+.kal-modal-month-name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.52rem;
+  color: #d4a843;
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+}
+.kal-modal-month-meaning {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.88rem;
+  color: rgba(220, 210, 190, 0.7);
+  font-style: italic;
+}
+.kal-modal-month-real {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.78rem;
+  color: rgba(200, 190, 170, 0.4);
+  margin-top: 2px;
+}
+.kal-modal-now-badge {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.36rem;
+  color: #0a0c14;
+  background: #d4a843;
+  border-radius: 20px;
+  padding: 3px 8px;
+  align-self: flex-start;
+  letter-spacing: 0.04em;
+}
+
+/* Nonaktifkan pointer pada placeholder (gambar hanya dari dev) */
+.kal-image-placeholder {
+  pointer-events: none;
+}
