@@ -170,7 +170,7 @@ const RACE_DATA = [
     image: "https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Race%20system/Pixie%20pic.jpg", 
     hp: 8, mp: 35, atk: 2, def: 0, move: 4,
     trait: "Bubuk peri",        
-    traitDesc: "🧚 Fairy Dust: Biaya MP untuk semua spell-mu berkurang 2 (tidak bisa kurang dari 1).",
+    traitDesc: "🧚 Fairy Dust: Biaya MP untuk semua spell-mu berkurang -20% dari total MP.",
     color: "#30f8ee",
     lore: "Faeborn adalah keturunan peri yang memiliki kekuatan sihir dalam darah mereka. Mereka bangga, kuat, dan memiliki semangat juang yang membara." },
   { id: "undead",     
