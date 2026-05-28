@@ -178,7 +178,7 @@ const RACE_DATA = [
     image: "https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Race%20system/Undead%20pic.jpg",     
     hp: 25, mp: 15, atk: 2, def: 2, move: 2,
     trait: "Kekal",           
-    traitDesc: "Sekali per pertempuran, saat HP mencapai 0, kamu bertahan di 1 HP dan langsung mendapat 1 AP (hangus jika tidak dipakai di giliran itu)",      
+    traitDesc: "Sekali per pertempuran, saat HP mencapai 1, kamu kebal terhadap kematian selama 2 Turn, tidak bisa di Heal, atau menggunakan Potion. Setelah 2 turn, char memasuki kondisi (Death's Door)",      
     color: "#627e8b", 
     lore: "Undead adalah makhluk yang telah meninggal namun masih hidup. Mereka memiliki kekuatan yang luar biasa dan tidak mudah dikalahkan." },
 ];
