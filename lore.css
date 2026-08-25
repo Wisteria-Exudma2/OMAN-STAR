@@ -243,6 +243,10 @@
 .lore-hero {
   text-align: center;
   padding: 80px 0 60px;
+  /* ✅ FIX: mencegah judul OMAN keluar batas ke atas / menutupi navbar */
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
 
 .lore-hero-ornament {
@@ -259,13 +263,20 @@
   color: #fff;
   letter-spacing: 0.15em;
   margin: 0 0 8px;
-  text-shadow: 0 0 40px #c8a84b, 0 0 80px #c8a84b66, 0 2px 0 #0008;
+  /* ✅ FIX: shadow dikecilkan agar tidak bocor ke TOC di bawah */
+  text-shadow:
+    0 0 30px #c8a84b,
+    0 0 55px #c8a84b55,
+    0 2px 0 #0008;
   animation: lore-title-glow 4s ease-in-out infinite alternate;
+  /* Batasi render area shadow agar tidak meluber */
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes lore-title-glow {
-  from { text-shadow: 0 0 30px #c8a84b, 0 0 60px #c8a84b44; }
-  to   { text-shadow: 0 0 55px #ffd97a, 0 0 100px #ffd97a66, 0 0 160px #ff990022; }
+  from { text-shadow: 0 0 25px #c8a84b, 0 0 45px #c8a84b33; }
+  to   { text-shadow: 0 0 45px #ffd97a, 0 0 80px #ffd97a44, 0 0 110px #ff990011; }
 }
 
 .lore-subtitle {
@@ -290,6 +301,16 @@
   justify-content: center;
   gap: 8px;
   margin-top: 32px;
+  /* ✅ FIX: pastikan TOC selalu tampil di ATAS shadow judul OMAN */
+  position: relative;
+  z-index: 10;
+  /* Latar belakang tipis sebagai "pembatas" agar tombol terbaca jelas */
+  padding: 16px 12px;
+  background: rgba(2, 0, 8, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(200, 168, 75, 0.18);
+  border-radius: 8px;
 }
 
 .lore-toc-btn {
