@@ -1,0 +1,278 @@
+/* ============================================================
+   IDCARD.CSS — OMAN WEBSITE
+   Halaman "ID CARD PLAYER" — grid layout form + kartu preview
+   ============================================================ */
+
+.idc-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .idc-grid { grid-template-columns: 1fr; }
+  .idc-grid #idc-preview-area { position: static !important; }
+}
+
+.idc-section-label {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.idc-static-value {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--dark-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-bright);
+}
+
+/* ── Bingkai kartu ─────────────────────────────────────────── */
+.idc-card-frame {
+  position: relative;
+  background: linear-gradient(160deg, rgba(10,12,20,0.95), rgba(24,16,32,0.92));
+  border: 1px solid rgba(212,168,67,0.4);
+  border-radius: 16px;
+  padding: 22px 18px;
+  overflow-x: auto;
+  box-shadow:
+    0 0 40px rgba(212,168,67,0.12),
+    inset 0 0 30px rgba(212,168,67,0.05);
+}
+
+.idc-card-pre {
+  font-family: 'Cascadia Code', 'Courier New', monospace;
+  font-size: 0.74rem;
+  line-height: 1.65;
+  white-space: pre;
+  margin: 0;
+  color: rgba(230, 220, 195, 0.9);
+}
+
+.idc-l {
+  display: block;
+}
+.idc-l-title {
+  color: var(--gold-bright, #ffd700);
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(212,168,67,0.4);
+}
+.idc-l-section {
+  color: var(--gold);
+  font-weight: 700;
+  margin-top: 4px;
+}
+.idc-l-div {
+  color: rgba(212,168,67,0.35);
+}
+.idc-l-field {
+  color: rgba(240,230,210,0.92);
+}
+.idc-l-plain {
+  color: rgba(200,190,170,0.4);
+}
+
+@media (max-width: 480px) {
+  .idc-card-pre { font-size: 0.62rem; }
+}
+
+/* ── Badge Element terkunci (setelah spin) ──────────────────── */
+.idc-element-locked {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--dark-border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.03);
+}
+.idc-element-locked-icon {
+  font-size: 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+.idc-element-locked-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.idc-element-locked-name {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.idc-element-locked-note {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+/* ── Modal Ritual Spin Elemen ────────────────────────────────── */
+.idc-spin-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2,4,10,0);
+  backdrop-filter: blur(0px);
+  transition: background 0.35s ease, backdrop-filter 0.35s ease;
+  padding: 20px;
+}
+.idc-spin-overlay.show {
+  background: rgba(2,4,10,0.86);
+  backdrop-filter: blur(6px);
+}
+
+.idc-spin-modal {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(160deg, rgba(10,12,20,0.97), rgba(22,14,30,0.95));
+  border: 1px solid rgba(212,168,67,0.45);
+  border-radius: 20px;
+  padding: 32px 26px 28px;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(212,168,67,0.18), 0 0 120px rgba(212,168,67,0.08);
+  transform: scale(0.92);
+  opacity: 0;
+  animation: idcSpinModalIn 0.3s ease forwards 0.05s;
+}
+@keyframes idcSpinModalIn {
+  to { transform: scale(1); opacity: 1; }
+}
+
+.idc-spin-title {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.idc-spin-mute {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(212,168,67,0.3);
+  background: rgba(212,168,67,0.08);
+  color: var(--gold);
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.idc-spin-mute:hover {
+  background: rgba(212,168,67,0.18);
+}
+.idc-spin-sub {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-bottom: 22px;
+  font-family: var(--font-ui);
+}
+
+.idc-spin-tile {
+  --spin-color: #d4a843;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 34px 20px;
+  border-radius: 16px;
+  border: 2px solid var(--spin-color);
+  background: rgba(255,255,255,0.03);
+  box-shadow: 0 0 30px var(--spin-color);
+  transition: border-color 0.08s linear, box-shadow 0.08s linear;
+}
+.idc-spin-tile-icon {
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--spin-color);
+  filter: drop-shadow(0 0 10px currentColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+}
+.idc-spin-tile-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.idc-spin-tile-name {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--spin-color);
+}
+.idc-spin-tile-landed {
+  animation: idcSpinLanded 0.6s ease;
+}
+@keyframes idcSpinLanded {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.14); }
+  100% { transform: scale(1); }
+}
+
+.idc-spin-result {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.idc-spin-result.show { opacity: 1; transform: translateY(0); }
+.idc-spin-result-icon {
+  font-size: 3rem;
+  margin: 0 auto 10px;
+  filter: drop-shadow(0 0 14px currentColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+}
+.idc-spin-result-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.idc-spin-result-title {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.idc-spin-result-msg {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: rgba(230,220,200,0.85);
+}
+
+@media (max-width: 480px) {
+  .idc-spin-modal { padding: 26px 20px 22px; }
+  .idc-spin-tile { padding: 26px 16px; }
+  .idc-spin-tile-icon, .idc-spin-result-icon { font-size: 2.2rem; }
+}
