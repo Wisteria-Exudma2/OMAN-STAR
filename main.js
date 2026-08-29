@@ -8,7 +8,7 @@
 // ════════════════════════════════════════════════════════════
 // SPA NAVIGATION
 // ════════════════════════════════════════════════════════════
-const PAGES = ['home','class','ras','leveling','ekonomi','faksi','quest','equipment','peta','skill','battle','kalkulator','bintang','kalender','lore'];
+const PAGES = ['home','class','ras','leveling','ekonomi','faksi','quest','equipment','peta','skill','battle','kalkulator','idcard','bintang','kalender','lore'];
 
 function navigateTo(pageId) {
   PAGES.forEach(p => {
@@ -21,6 +21,16 @@ function navigateTo(pageId) {
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
     // ▼ TAMBAHKAN INI ▼
+  const bgmHome = document.getElementById('bgm-home');
+  if (bgmHome) {
+    if (pageId === 'home') {
+      setupHomeClick(bgmHome);
+    } else {
+      bgmHome.pause();
+      bgmHome.currentTime = 0;
+      removeHomeClick();
+    }
+  }
   const bgm = document.getElementById('bgm-bintang');
   if (bgm) {
     if (pageId === 'bintang') {
@@ -65,6 +75,7 @@ function renderPage(pageId) {
     case 'skill':     renderSkillPage(); break;
     case 'battle':    renderBattlePage(); break;
     case 'kalkulator':renderKalkulatorPage(); break;
+    case 'idcard':    renderIdCardPage(); break;
     case 'peta':      if (typeof initMapSystem   === 'function') initMapSystem(); break;
     case 'bintang':   if (typeof initStargazer  === 'function') initStargazer(); break;
     case 'kalender':  renderKalenderPage(); break;
@@ -1422,9 +1433,70 @@ document.addEventListener('DOMContentLoaded', () => {
   // Init RA Clock (always visible on home page)
   initRAClock();
 
+  // Backsound Home — halaman Home aktif secara default (bukan lewat
+  // navigateTo), jadi mekanisme klik-untuk-mulai perlu di-setup manual di sini.
+  const bgmHome = document.getElementById('bgm-home');
+  if (bgmHome) setupHomeClick(bgmHome);
+
   // Render initial home page already rendered via HTML
   // Other pages rendered on navigation
 });
+
+// ════════════════════════════════════════════════════════════
+// BACKSOUND TAB HOME
+// ════════════════════════════════════════════════════════════
+// Musik custom: ganti URL di tag <audio id="bgm-home"> pada index.html.
+// Diputar loop terus-menerus. Karena aturan browser melarang autoplay
+// bersuara tanpa interaksi user, musik mulai saat pengunjung klik
+// pertama kali di halaman Home (sama seperti mekanisme tab Bintang).
+let homeClickHandler = null;
+let homeBgmMuted = (function () {
+  try { return localStorage.getItem('home_bgm_muted') === '1'; } catch (e) { return false; }
+})();
+
+function setupHomeClick(bgm) {
+  removeHomeClick();
+  bgm.muted = homeBgmMuted;
+
+  const toggleBtn = document.getElementById('home-bgm-toggle');
+  if (toggleBtn) toggleBtn.classList.add('show');
+  updateHomeBgmIcon();
+
+  homeClickHandler = function () {
+    if (bgm.paused && !homeBgmMuted) {
+      bgm.play().catch(() => {});
+    }
+  };
+  const page = document.getElementById('page-home');
+  if (page) page.addEventListener('click', homeClickHandler);
+}
+
+function removeHomeClick() {
+  if (homeClickHandler) {
+    const page = document.getElementById('page-home');
+    if (page) page.removeEventListener('click', homeClickHandler);
+    homeClickHandler = null;
+  }
+  const toggleBtn = document.getElementById('home-bgm-toggle');
+  if (toggleBtn) toggleBtn.classList.remove('show');
+}
+
+function toggleHomeBgm() {
+  const bgm = document.getElementById('bgm-home');
+  if (!bgm) return;
+  homeBgmMuted = !homeBgmMuted;
+  try { localStorage.setItem('home_bgm_muted', homeBgmMuted ? '1' : '0'); } catch (e) {}
+  bgm.muted = homeBgmMuted;
+  if (!homeBgmMuted && bgm.paused) {
+    bgm.play().catch(() => {});
+  }
+  updateHomeBgmIcon();
+}
+
+function updateHomeBgmIcon() {
+  const btn = document.getElementById('home-bgm-toggle');
+  if (btn) btn.textContent = homeBgmMuted ? '🔇' : '🔊';
+}
 
 // ════════════════════════════════════════════════════════════
 // BACKSOUND TAB BINTANG
