@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="stargazer.css" />
   <link rel="stylesheet" href="kalender-extra.css" />
   <link rel="stylesheet" href="lore.css" />
+  <link rel="stylesheet" href="idcard.css" />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>" />
 </head>
@@ -44,6 +45,7 @@
       <button class="nav-btn"        data-page="skill"     id="nav-skill">SKILL</button>
       <button class="nav-btn"        data-page="battle"    id="nav-battle">⚔️ BATTLE</button>
       <button class="nav-btn"        data-page="kalkulator"id="nav-kalkulator">KALKULATOR</button>
+      <button class="nav-btn"        data-page="idcard"    id="nav-idcard">🪪 ID CARD</button>
       <button class="nav-btn"        data-page="bintang"   id="nav-bintang">🌌 BINTANG</button>
       <button class="nav-btn"        data-page="kalender"  id="nav-kalender">📅 KALENDER</button>
       <button class="nav-btn"        data-page="lore"      id="nav-lore">📖 LORE</button>
@@ -119,7 +121,7 @@
         <div class="overview-card" onclick="navigateTo('ras')" id="card-ras">
           <div class="overview-card-icon">🧬</div>
           <div class="overview-card-title">RAS SYSTEM</div>
-          <div class="overview-card-desc">10 ras dengan trait dan bonus stat berbeda</div>
+          <div class="overview-card-desc">7 ras dengan trait dan bonus stat berbeda</div>
         </div>
         <div class="overview-card" onclick="navigateTo('faksi')" id="card-faksi">
           <div class="overview-card-icon">✨</div>
@@ -545,6 +547,28 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════
+       PAGE: ID CARD PLAYER
+  ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-idcard">
+    <div class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="page-hero-content">
+        <div class="page-hero-icon">🪪</div>
+        <h2 class="page-hero-title">ID CARD PLAYER</h2>
+        <p class="page-hero-sub">Buat kartu identitas karaktermu untuk perkenalan diri & pendaftaran guild</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="tabs" id="idc-tabs">
+        <button class="tab-btn active" data-idc="form" id="tab-idc-form">✏️ BUAT ID CARD</button>
+        <button class="tab-btn"        data-idc="update" id="tab-idc-update">🔄 UPDATE CHARACTER</button>
+        <button class="tab-btn"        data-idc="list" id="tab-idc-list">📋 DAFTAR ID CARD</button>
+      </div>
+      <div id="idc-display-area"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
        PAGE: BINTANG (STARGAZER)
   ═══════════════════════════════════════════════════ -->
   <section class="page" id="page-bintang">
@@ -806,7 +830,7 @@
         <div class="lore-chapter-label">✦ Prolog</div>
         <!-- ✏️ GANTI: ganti src di bawah ini dengan link gambar dari Supabase kamu untuk bab "prolog" -->
         <div class="lore-chapter-image-wrap">
-          <img class="lore-chapter-image" src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Prolog.jpg" alt="Ilustrasi prolog" loading="lazy" onclick="openLoreImageModal(this)" onerror="this.closest('.lore-chapter-image-wrap').style.display='none'" />
+          <div class="lore-chapter-image" role="img" aria-label="Ilustrasi prolog" data-lore-src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Prolog.jpg" data-lore-title="Ilustrasi prolog" style="background-image:url('https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Prolog.jpg')"></div>
         </div>
         <h2 class="lore-chapter-title">Undangan untuk Pengembara</h2>
         <div class="lore-chapter-body">
@@ -823,7 +847,7 @@
         <div class="lore-chapter-label">✦ Bab I</div>
         <!-- ✏️ GANTI: ganti src di bawah ini dengan link gambar dari Supabase kamu untuk bab "bab1" -->
         <div class="lore-chapter-image-wrap">
-          <img class="lore-chapter-image" src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%201.jpg" alt="Ilustrasi bab1" loading="lazy" onclick="openLoreImageModal(this)" onerror="this.closest('.lore-chapter-image-wrap').style.display='none'" />
+          <div class="lore-chapter-image" role="img" aria-label="Ilustrasi bab1" data-lore-src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%201.jpg" data-lore-title="Ilustrasi bab1" style="background-image:url('https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%201.jpg')"></div>
         </div>
         <h2 class="lore-chapter-title">Al-Thurayya — Dunia di Bawah Tujuh Mahkota Cahaya</h2>
         <div class="lore-chapter-body">
@@ -849,7 +873,7 @@
         <div class="lore-chapter-label">✦ Bab II</div>
         <!-- ✏️ GANTI: ganti src di bawah ini dengan link gambar dari Supabase kamu untuk bab "bab2" -->
         <div class="lore-chapter-image-wrap">
-          <img class="lore-chapter-image" src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%202.jpg" alt="Ilustrasi bab2" loading="lazy" onclick="openLoreImageModal(this)" onerror="this.closest('.lore-chapter-image-wrap').style.display='none'" />
+          <div class="lore-chapter-image" role="img" aria-label="Ilustrasi bab2" data-lore-src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%202.jpg" data-lore-title="Ilustrasi bab2" style="background-image:url('https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%202.jpg')"></div>
         </div>
         <h2 class="lore-chapter-title">Kematian Pertama</h2>
         <div class="lore-chapter-body">
@@ -866,7 +890,7 @@
         <div class="lore-chapter-label">✦ Bab III</div>
         <!-- ✏️ GANTI: ganti src di bawah ini dengan link gambar dari Supabase kamu untuk bab "bab3" -->
         <div class="lore-chapter-image-wrap">
-          <img class="lore-chapter-image" src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%203.jpg" alt="Ilustrasi bab3" loading="lazy" onclick="openLoreImageModal(this)" onerror="this.closest('.lore-chapter-image-wrap').style.display='none'" />
+          <div class="lore-chapter-image" role="img" aria-label="Ilustrasi bab3" data-lore-src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%203.jpg" data-lore-title="Ilustrasi bab3" style="background-image:url('https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%203.jpg')"></div>
         </div>
         <h2 class="lore-chapter-title">Langit yang Sekarat</h2>
         <div class="lore-chapter-body">
@@ -883,7 +907,7 @@
         <div class="lore-chapter-label">✦ Bab IV</div>
         <!-- ✏️ GANTI: ganti src di bawah ini dengan link gambar dari Supabase kamu untuk bab "bab4" -->
         <div class="lore-chapter-image-wrap">
-          <img class="lore-chapter-image" src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%204.jpg" alt="Ilustrasi bab4" loading="lazy" onclick="openLoreImageModal(this)" onerror="this.closest('.lore-chapter-image-wrap').style.display='none'" />
+          <div class="lore-chapter-image" role="img" aria-label="Ilustrasi bab4" data-lore-src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%204.jpg" data-lore-title="Ilustrasi bab4" style="background-image:url('https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%204.jpg')"></div>
         </div>
         <h2 class="lore-chapter-title">Dosa yang Tidak Diketahui</h2>
         <div class="lore-chapter-body">
@@ -901,7 +925,7 @@
         <div class="lore-chapter-label">✦ Bab V</div>
         <!-- ✏️ GANTI: ganti src di bawah ini dengan link gambar dari Supabase kamu untuk bab "bab5" -->
         <div class="lore-chapter-image-wrap">
-          <img class="lore-chapter-image" src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%205.jpg" alt="Ilustrasi bab5" loading="lazy" onclick="openLoreImageModal(this)" onerror="this.closest('.lore-chapter-image-wrap').style.display='none'" />
+          <div class="lore-chapter-image" role="img" aria-label="Ilustrasi bab5" data-lore-src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%205.jpg" data-lore-title="Ilustrasi bab5" style="background-image:url('https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%205.jpg')"></div>
         </div>
         <h2 class="lore-chapter-title">Malam Kejatuhan</h2>
         <div class="lore-chapter-body">
@@ -918,7 +942,7 @@
         <div class="lore-chapter-label">✦ Bab VI</div>
         <!-- ✏️ GANTI: ganti src di bawah ini dengan link gambar dari Supabase kamu untuk bab "bab6" -->
         <div class="lore-chapter-image-wrap">
-          <img class="lore-chapter-image" src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%206.jpg" alt="Ilustrasi bab6" loading="lazy" onclick="openLoreImageModal(this)" onerror="this.closest('.lore-chapter-image-wrap').style.display='none'" />
+          <div class="lore-chapter-image" role="img" aria-label="Ilustrasi bab6" data-lore-src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%206.jpg" data-lore-title="Ilustrasi bab6" style="background-image:url('https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%206.jpg')"></div>
         </div>
         <h2 class="lore-chapter-title">Tahun Nol — Kelahiran Oman</h2>
         <div class="lore-chapter-body">
@@ -935,7 +959,7 @@
         <div class="lore-chapter-label">✦ Bab VII</div>
         <!-- ✏️ GANTI: ganti src di bawah ini dengan link gambar dari Supabase kamu untuk bab "bab7" -->
         <div class="lore-chapter-image-wrap">
-          <img class="lore-chapter-image" src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%207.jpg" alt="Ilustrasi bab7" loading="lazy" onclick="openLoreImageModal(this)" onerror="this.closest('.lore-chapter-image-wrap').style.display='none'" />
+          <div class="lore-chapter-image" role="img" aria-label="Ilustrasi bab7" data-lore-src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%207.jpg" data-lore-title="Ilustrasi bab7" style="background-image:url('https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%207.jpg')"></div>
         </div>
         <h2 class="lore-chapter-title">Tujuh Faksi, Tujuh Luka</h2>
         <div class="lore-chapter-body">
@@ -957,7 +981,7 @@
         <div class="lore-chapter-label">✦ Bab VIII</div>
         <!-- ✏️ GANTI: ganti src di bawah ini dengan link gambar dari Supabase kamu untuk bab "bab8" -->
         <div class="lore-chapter-image-wrap">
-          <img class="lore-chapter-image" src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%208.jpg" alt="Ilustrasi bab8" loading="lazy" onclick="openLoreImageModal(this)" onerror="this.closest('.lore-chapter-image-wrap').style.display='none'" />
+          <div class="lore-chapter-image" role="img" aria-label="Ilustrasi bab8" data-lore-src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%208.jpg" data-lore-title="Ilustrasi bab8" style="background-image:url('https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%208.jpg')"></div>
         </div>
         <h2 class="lore-chapter-title">Kosmologi dan Kekuatan</h2>
         <div class="lore-chapter-body">
@@ -984,7 +1008,7 @@
         <div class="lore-chapter-label">✦ Bab IX</div>
         <!-- ✏️ GANTI: ganti src di bawah ini dengan link gambar dari Supabase kamu untuk bab "bab9" -->
         <div class="lore-chapter-image-wrap">
-          <img class="lore-chapter-image" src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%209.jpg" alt="Ilustrasi bab9" loading="lazy" onclick="openLoreImageModal(this)" onerror="this.closest('.lore-chapter-image-wrap').style.display='none'" />
+          <div class="lore-chapter-image" role="img" aria-label="Ilustrasi bab9" data-lore-src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%209.jpg" data-lore-title="Ilustrasi bab9" style="background-image:url('https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%209.jpg')"></div>
         </div>
         <h2 class="lore-chapter-title">Oman Hari Ini — Tahun 2500 Ra</h2>
         <div class="lore-chapter-body">
@@ -1002,7 +1026,7 @@
         <div class="lore-chapter-label">✦ Epilog</div>
         <!-- ✏️ GANTI: ganti src di bawah ini dengan link gambar dari Supabase kamu untuk bab "epilog" -->
         <div class="lore-chapter-image-wrap">
-          <img class="lore-chapter-image" src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%2010.jpg" alt="Ilustrasi epilog" loading="lazy" onclick="openLoreImageModal(this)" onerror="this.closest('.lore-chapter-image-wrap').style.display='none'" />
+          <div class="lore-chapter-image" role="img" aria-label="Ilustrasi epilog" data-lore-src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%2010.jpg" data-lore-title="Ilustrasi epilog" style="background-image:url('https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Gambar%20Lore/Bag%2010.jpg')"></div>
         </div>
         <h2 class="lore-chapter-title">Malam Ketujuh</h2>
         <div class="lore-chapter-body">
@@ -1036,116 +1060,40 @@
 
 </div><!-- /#app -->
 
-    <!-- 🖼️ Modal Pop-up Gambar Bab — klik gambar bab untuk membuka, dengan zoom in/out -->
-    <div class="lore-image-modal" id="lore-image-modal" onclick="if(event.target===this) closeLoreImageModal()">
-      <div class="lore-image-modal-toolbar">
-        <button type="button" class="lore-image-modal-btn" onclick="loreImageZoom(-0.25)" aria-label="Perkecil gambar">−</button>
-        <span class="lore-image-modal-zoom-label" id="lore-image-zoom-label">100%</span>
-        <button type="button" class="lore-image-modal-btn" onclick="loreImageZoom(0.25)" aria-label="Perbesar gambar">+</button>
-        <button type="button" class="lore-image-modal-btn" onclick="loreImageZoomReset()" aria-label="Reset zoom">⤾</button>
-        <button type="button" class="lore-image-modal-btn lore-image-modal-close" onclick="closeLoreImageModal()" aria-label="Tutup">✕</button>
-      </div>
-      <div class="lore-image-modal-stage" id="lore-image-modal-stage">
-        <img id="lore-image-modal-img" src="" alt="" draggable="false" />
-      </div>
-      <p class="lore-image-modal-hint">Scroll / tombol +− untuk zoom · geser gambar saat diperbesar · Esc untuk tutup</p>
-    </div>
 
-    <script>
-    (function () {
-      var modal, stage, img, zoomLabel;
-      var scale = 1, minScale = 0.5, maxScale = 4;
-      var isPanning = false, startX = 0, startY = 0, originX = 0, originY = 0, posX = 0, posY = 0;
 
-      function ensureRefs() {
-        if (!modal) modal = document.getElementById('lore-image-modal');
-        if (!stage) stage = document.getElementById('lore-image-modal-stage');
-        if (!img) img = document.getElementById('lore-image-modal-img');
-        if (!zoomLabel) zoomLabel = document.getElementById('lore-image-zoom-label');
-      }
-
-      function applyTransform() {
-        if (!img || !zoomLabel) return;
-        img.style.transform = 'translate(' + posX + 'px,' + posY + 'px) scale(' + scale + ')';
-        img.style.cursor = scale > 1 ? 'grab' : 'zoom-in';
-        zoomLabel.textContent = Math.round(scale * 100) + '%';
-      }
-
-      window.openLoreImageModal = function (imgEl) {
-        ensureRefs();
-        if (!imgEl || !imgEl.getAttribute('src')) return;
-        img.src = imgEl.src;
-        img.alt = imgEl.alt || '';
-        scale = 1; posX = 0; posY = 0;
-        applyTransform();
-        modal.classList.add('lore-image-modal--open');
-        document.body.style.overflow = 'hidden';
-      };
-
-      window.closeLoreImageModal = function () {
-        ensureRefs();
-        modal.classList.remove('lore-image-modal--open');
-        document.body.style.overflow = '';
-      };
-
-      window.loreImageZoom = function (delta) {
-        ensureRefs();
-        scale = Math.min(maxScale, Math.max(minScale, +(scale + delta).toFixed(2)));
-        if (scale <= 1) { posX = 0; posY = 0; }
-        applyTransform();
-      };
-
-      window.loreImageZoomReset = function () {
-        ensureRefs();
-        scale = 1; posX = 0; posY = 0;
-        applyTransform();
-      };
-
-      document.addEventListener('keydown', function (e) {
-        ensureRefs();
-        if (!modal || !modal.classList.contains('lore-image-modal--open')) return;
-        if (e.key === 'Escape') window.closeLoreImageModal();
-        if (e.key === '+' || e.key === '=') window.loreImageZoom(0.25);
-        if (e.key === '-' || e.key === '_') window.loreImageZoom(-0.25);
-        if (e.key === '0') window.loreImageZoomReset();
-      });
-
-      ensureRefs();
-      if (stage) {
-        stage.addEventListener('wheel', function (e) {
-          e.preventDefault();
-          window.loreImageZoom(e.deltaY < 0 ? 0.15 : -0.15);
-        }, { passive: false });
-
-        stage.addEventListener('dblclick', function () {
-          if (scale > 1) { window.loreImageZoomReset(); }
-          else { scale = 2; applyTransform(); }
-        });
-
-        stage.addEventListener('pointerdown', function (e) {
-          if (scale <= 1) return;
-          isPanning = true;
-          startX = e.clientX; startY = e.clientY;
-          originX = posX; originY = posY;
-          img.style.cursor = 'grabbing';
-          stage.setPointerCapture(e.pointerId);
-        });
-        stage.addEventListener('pointermove', function (e) {
-          if (!isPanning) return;
-          posX = originX + (e.clientX - startX);
-          posY = originY + (e.clientY - startY);
-          applyTransform();
-        });
-        ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (ev) {
-          stage.addEventListener(ev, function () {
-            isPanning = false;
-            if (img) img.style.cursor = scale > 1 ? 'grab' : 'zoom-in';
-          });
-        });
-      }
-    })();
-    </script>
-
+<!-- Backsound Tab Home — ganti URL src di bawah dengan musik kamu sendiri -->
+<audio id="bgm-home" preload="auto" loop>
+  <source src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Audio/Tab%20home%20backsound.ogg" type="audio/ogg">
+</audio>
+<button id="home-bgm-toggle" onclick="toggleHomeBgm()" title="Nyalakan/matikan musik">🔊</button>
+<style>
+  #home-bgm-toggle {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    z-index: 200;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,168,67,0.35);
+    background: rgba(10,12,20,0.85);
+    color: #d4a843;
+    font-size: 1.05rem;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+    transition: background 0.2s, transform 0.2s;
+  }
+  #home-bgm-toggle.show { display: flex; }
+  #home-bgm-toggle:hover { background: rgba(212,168,67,0.18); transform: scale(1.08); }
+  @media (max-width: 640px) {
+    #home-bgm-toggle { bottom: 16px; right: 16px; width: 38px; height: 38px; }
+  }
+</style>
 
 <!-- Backsound Tab Bintang -->
 <audio id="bgm-bintang" preload="auto">
@@ -1154,8 +1102,7 @@
 
 <!-- Backsound Tab Lore — ganti URL dengan file audio dari Supabase kamu -->
 <audio id="bgm-lore" preload="auto" loop>
-  <source src="GANTI_DENGAN_URL_SUPABASE_KAMU.ogg" type="audio/ogg">
-  <source src="GANTI_DENGAN_URL_SUPABASE_KAMU.mp3" type="audio/mpeg">
+  <source src="https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Audio/Akustik%20OGG.ogg" type="audio/ogg">
 </audio>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1164,7 +1111,294 @@
 <script src="main.js"></script>
 <script src="map.js"></script>
 <script src="calculator.js"></script>
+<script src="idcard.js"></script>
 <script src="stargazer.js"></script>
 <script src="lore.js"></script>
+
+<!-- 🖼️ Popup Gambar Bab Lore — dibangun dinamis via canvas (SAMA seperti openLocationPopup
+     di map.js), supaya lolos dari initImageProtection() yang menetralkan semua tag <img>.
+     Thumbnail gambar bab di HTML sengaja pakai <div style="background-image:..."> (bukan <img>)
+     dengan alasan yang sama. -->
+<script>
+(function () {
+
+  // ── Delegasi klik pada thumbnail gambar bab (div.lore-chapter-image) ──
+  document.addEventListener('click', function (e) {
+    var thumb = e.target.closest('.lore-chapter-image');
+    if (!thumb) return;
+    var src = thumb.getAttribute('data-lore-src');
+    var title = thumb.getAttribute('data-lore-title') || 'Ilustrasi Bab';
+    if (src) openLoreImagePopup(src, title);
+  });
+
+  function openLoreImagePopup(url, title) {
+    var existing = document.getElementById('lore-image-popup');
+    if (existing) existing.remove();
+
+    // ── Inject style sekali saja ──
+    if (!document.getElementById('lore-popup-style')) {
+      var style = document.createElement('style');
+      style.id = 'lore-popup-style';
+      style.textContent = [
+        '@keyframes _lorePopupFadeIn { from{opacity:0} to{opacity:1} }',
+        '@keyframes _lorePopupSlideIn {',
+        '  from { transform: translateY(24px) scale(0.96); opacity:0 }',
+        '  to   { transform: translateY(0)    scale(1);    opacity:1 }',
+        '}',
+        '#lore-image-popup-box { animation: _lorePopupSlideIn 0.32s cubic-bezier(0.22,1,0.36,1); }',
+        '#lore-popup-canvas { display:block; cursor:grab; }',
+        '#lore-popup-canvas.dragging { cursor:grabbing; }',
+        '.lore-popup-ctrl-btn {',
+        '  background: rgba(255,255,255,0.06);',
+        '  border: 1px solid rgba(255,255,255,0.13);',
+        '  color: rgba(255,255,255,0.75);',
+        '  font-size: 0.8rem; font-weight:700;',
+        '  width:32px; height:32px; border-radius:8px;',
+        '  cursor:pointer; display:flex; align-items:center; justify-content:center;',
+        '  transition: all 0.15s ease; flex-shrink:0; line-height:1; padding:0;',
+        '}',
+        '.lore-popup-ctrl-btn:hover { background: rgba(255,255,255,0.14); color:#fff; }',
+        '.lore-popup-zoom-label {',
+        '  font-family: monospace; font-size:0.62rem; color: rgba(255,255,255,0.4);',
+        '  letter-spacing:0.08em; min-width:42px; text-align:center;',
+        '}'
+      ].join('\n');
+      document.head.appendChild(style);
+    }
+
+    var color = '#c8a84b';
+
+    // ── Overlay ──
+    var overlay = document.createElement('div');
+    overlay.id = 'lore-image-popup';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(4,6,14,0.9);' +
+      'backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;' +
+      'animation:_lorePopupFadeIn 0.22s ease;padding:16px;box-sizing:border-box;';
+
+    // ── Box ──
+    var box = document.createElement('div');
+    box.id = 'lore-image-popup-box';
+    box.style.cssText = 'background:#06090e;border:1px solid rgba(200,168,75,0.4);' +
+      'border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.04),0 40px 100px rgba(0,0,0,0.85),' +
+      '0 0 70px rgba(200,168,75,0.15);width:100%;max-width:1100px;height:90vh;max-height:820px;' +
+      'display:flex;flex-direction:column;overflow:hidden;font-family:"Crimson Text",serif;position:relative;';
+
+    // ── Header ──
+    var header = document.createElement('div');
+    header.style.cssText = 'display:flex;align-items:center;gap:10px;padding:12px 16px;' +
+      'border-bottom:1px solid rgba(200,168,75,0.2);background:rgba(0,0,0,0.45);flex-shrink:0;';
+    header.innerHTML =
+      '<span style="font-size:1.1rem;flex-shrink:0;">📖</span>' +
+      '<span style="font-size:0.78rem;font-weight:700;color:' + color + ';letter-spacing:0.08em;flex:1;' +
+      'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + title + '</span>' +
+      '<div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">' +
+      '<button class="lore-popup-ctrl-btn" id="lore-popup-zoom-out" title="Zoom Out">−</button>' +
+      '<span class="lore-popup-zoom-label" id="lore-popup-zoom-label">100%</span>' +
+      '<button class="lore-popup-ctrl-btn" id="lore-popup-zoom-in" title="Zoom In">+</button>' +
+      '<button class="lore-popup-ctrl-btn" id="lore-popup-zoom-fit" title="Fit" ' +
+      'style="font-size:0.6rem;width:auto;padding:0 8px;">FIT</button></div>' +
+      '<div style="width:1px;height:20px;background:rgba(255,255,255,0.1);flex-shrink:0;margin:0 4px;"></div>' +
+      '<button id="lore-popup-close" class="lore-popup-ctrl-btn" style="border-radius:50%;width:30px;height:30px;">✕</button>';
+
+    // ── Canvas wrapper ──
+    var canvasWrap = document.createElement('div');
+    canvasWrap.style.cssText = 'flex:1;position:relative;overflow:hidden;' +
+      'background:radial-gradient(ellipse at center,#0c1020 0%,#060912 100%);';
+
+    var canvas = document.createElement('canvas');
+    canvas.id = 'lore-popup-canvas';
+    canvasWrap.appendChild(canvas);
+
+    var loader = document.createElement('div');
+    loader.id = 'lore-popup-loader';
+    loader.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;' +
+      'align-items:center;justify-content:center;gap:14px;color:' + color + ';font-size:0.7rem;' +
+      'letter-spacing:0.14em;background:#060912;z-index:10;transition:opacity 0.35s ease;';
+    loader.innerHTML = '<span style="font-size:2.2rem;">📖</span>' +
+      '<span style="color:rgba(255,255,255,0.5);">Memuat ilustrasi…</span>';
+    canvasWrap.appendChild(loader);
+
+    var hint = document.createElement('div');
+    hint.style.cssText = 'position:absolute;bottom:12px;left:50%;transform:translateX(-50%);' +
+      'font-size:0.58rem;color:rgba(255,255,255,0.25);letter-spacing:0.1em;pointer-events:none;white-space:nowrap;';
+    hint.textContent = '🖱 DRAG UNTUK GESER   •   SCROLL UNTUK ZOOM';
+    canvasWrap.appendChild(hint);
+
+    box.appendChild(header);
+    box.appendChild(canvasWrap);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    // ── State pan & zoom (identik dengan mekanisme peta) ──
+    var img = null, scale = 1, fitScale = 1, maxScale = 4;
+    var panX = 0, panY = 0, fitPanX = 0, fitPanY = 0;
+    var isDragging = false, lastMX = 0, lastMY = 0;
+    var ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      var r = canvasWrap.getBoundingClientRect();
+      canvas.width = Math.round(r.width);
+      canvas.height = Math.round(r.height);
+      if (img) calcFit();
+      render();
+    }
+
+    function calcFit() {
+      var cw = canvas.width, ch = canvas.height;
+      var iw = img.naturalWidth, ih = img.naturalHeight;
+      fitScale = Math.min(cw / iw, ch / ih);
+      fitPanX = (cw - iw * fitScale) / 2;
+      fitPanY = (ch - ih * fitScale) / 2;
+    }
+
+    function fitToCanvas() {
+      if (!img) return;
+      calcFit();
+      scale = fitScale; panX = fitPanX; panY = fitPanY;
+      updateZoomLabel(); render();
+    }
+
+    function clampPan() {
+      if (!img) return;
+      if (scale <= fitScale + 0.001) { panX = fitPanX; panY = fitPanY; return; }
+      var iw = img.naturalWidth * scale, ih = img.naturalHeight * scale;
+      var cw = canvas.width, ch = canvas.height, pad = 40;
+      panX = Math.min(pad, Math.max(cw - iw - pad, panX));
+      panY = Math.min(pad, Math.max(ch - ih - pad, panY));
+    }
+
+    function render() {
+      if (!img) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(panX, panY);
+      ctx.scale(scale, scale);
+      ctx.drawImage(img, 0, 0);
+      ctx.restore();
+    }
+
+    function updateZoomLabel() {
+      var lbl = document.getElementById('lore-popup-zoom-label');
+      if (lbl) lbl.textContent = Math.round(scale * 100) + '%';
+    }
+
+    function zoomAt(cx, cy, factor) {
+      var newScale = Math.min(maxScale, Math.max(fitScale, scale * factor));
+      if (newScale <= fitScale) {
+        scale = fitScale; panX = fitPanX; panY = fitPanY;
+        updateZoomLabel(); render(); return;
+      }
+      var ratio = newScale / scale;
+      panX = cx - ratio * (cx - panX);
+      panY = cy - ratio * (cy - panY);
+      scale = newScale;
+      clampPan(); updateZoomLabel(); render();
+    }
+
+    // ── Muat gambar via objek Image() — TIDAK PERNAH jadi tag <img> di DOM ──
+    var image = new Image();
+    image.crossOrigin = 'anonymous';
+    image.onload = function () {
+      img = image;
+      resizeCanvas();
+      fitToCanvas();
+      loader.style.opacity = '0';
+      setTimeout(function () { loader.remove(); }, 350);
+    };
+    image.onerror = function () {
+      loader.innerHTML = '<span style="font-size:2rem;">⚠️</span>' +
+        '<span style="color:rgba(255,120,120,0.8);font-size:0.68rem;">Gagal memuat gambar.</span>';
+    };
+    image.src = url;
+
+    var ro = new ResizeObserver(function () { resizeCanvas(); });
+    ro.observe(canvasWrap);
+
+    // ── Mouse: drag pan ──
+    canvas.addEventListener('mousedown', function (e) {
+      if (e.button !== 0) return;
+      isDragging = true; lastMX = e.clientX; lastMY = e.clientY;
+      canvas.classList.add('dragging'); e.preventDefault();
+    });
+    window.addEventListener('mousemove', function (e) {
+      if (!isDragging) return;
+      panX += e.clientX - lastMX; panY += e.clientY - lastMY;
+      lastMX = e.clientX; lastMY = e.clientY;
+      clampPan(); render();
+    });
+    window.addEventListener('mouseup', function () {
+      if (isDragging) { isDragging = false; canvas.classList.remove('dragging'); }
+    });
+
+    // ── Scroll zoom ──
+    canvas.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      var rect = canvas.getBoundingClientRect();
+      var cx = e.clientX - rect.left, cy = e.clientY - rect.top;
+      var factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+      zoomAt(cx, cy, factor);
+    }, { passive: false });
+
+    // ── Touch: pan 1 jari, pinch zoom 2 jari ──
+    var lastTouchDist = 0;
+    canvas.addEventListener('touchstart', function (e) {
+      if (e.touches.length === 1) {
+        isDragging = true; lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY;
+      } else if (e.touches.length === 2) {
+        isDragging = false;
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        lastTouchDist = Math.hypot(dx, dy);
+      }
+      e.preventDefault();
+    }, { passive: false });
+    canvas.addEventListener('touchmove', function (e) {
+      if (e.touches.length === 1 && isDragging) {
+        panX += e.touches[0].clientX - lastMX; panY += e.touches[0].clientY - lastMY;
+        lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY;
+        clampPan(); render();
+      } else if (e.touches.length === 2) {
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        var dist = Math.hypot(dx, dy);
+        var rect = canvas.getBoundingClientRect();
+        var midX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+        var midY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+        if (lastTouchDist > 0) zoomAt(midX, midY, dist / lastTouchDist);
+        lastTouchDist = dist;
+      }
+      e.preventDefault();
+    }, { passive: false });
+    canvas.addEventListener('touchend', function () { isDragging = false; });
+
+    // ── Tombol kontrol ──
+    document.getElementById('lore-popup-zoom-in').addEventListener('click', function () {
+      zoomAt(canvas.width / 2, canvas.height / 2, 1.25);
+    });
+    document.getElementById('lore-popup-zoom-out').addEventListener('click', function () {
+      zoomAt(canvas.width / 2, canvas.height / 2, 1 / 1.25);
+    });
+    document.getElementById('lore-popup-zoom-fit').addEventListener('click', fitToCanvas);
+
+    // ── Tutup ──
+    function doClose() {
+      ro.disconnect();
+      overlay.style.transition = 'opacity 0.2s ease';
+      overlay.style.opacity = '0';
+      setTimeout(function () { overlay.remove(); }, 210);
+      document.removeEventListener('keydown', escHandler);
+    }
+    function escHandler(e) {
+      if (e.key === 'Escape') doClose();
+    }
+    document.getElementById('lore-popup-close').addEventListener('click', doClose);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) doClose(); });
+    document.addEventListener('keydown', escHandler);
+  }
+
+  // ekspor untuk debug manual jika perlu
+  window.openLoreImagePopup = openLoreImagePopup;
+})();
+</script>
 </body>
 </html>
