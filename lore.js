@@ -10,7 +10,7 @@
      CONFIG — ganti URL_SUPABASE setelah upload ke Supabase
   ══════════════════════════════════════════════════════════ */
   /* URL video (mp4/webm dari Supabase, atau link YouTube) */
-  const LORE_VIDEO_URL = 'https://youtu.be/ONA-wjlef8k?si=W8beyVIp3-7F5bQW'; // ← isi URL video di sini
+  const LORE_VIDEO_URL = 'https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Lore%20Prolog%20Story%20Oman/TEASER%20LORE%20STORY%20KOMUNITAS%20ROLEPLAY%20WHATSAPP%20FANTASY%20MEDIEVAL%20SHORT%20MOVIE%20-%20OMAN%20FANTASY%20(720p)%20(1)%20(1).mp4'; // ← isi URL video di sini
 
   const LORE_BGM_URL = 'https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Audio/Akustik%20OGG.ogg'; // ← isi URL Supabase di sini
 
