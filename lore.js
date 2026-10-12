@@ -9,6 +9,9 @@
   /* ══════════════════════════════════════════════════════════
      CONFIG — ganti URL_SUPABASE setelah upload ke Supabase
   ══════════════════════════════════════════════════════════ */
+  /* URL video (mp4/webm dari Supabase, atau link YouTube) */
+  const LORE_VIDEO_URL = 'https://youtu.be/ONA-wjlef8k?si=W8beyVIp3-7F5bQW'; // ← isi URL video di sini
+
   const LORE_BGM_URL = 'https://hyutzatopojxwpyvdclp.supabase.co/storage/v1/object/public/OMAN%20IMG/Audio/Akustik%20OGG.ogg'; // ← isi URL Supabase di sini
 
   /* ══════════════════════════════════════════════════════════
@@ -73,6 +76,7 @@
   window.destroyLore = function () {
     if (!loreActive) return;
     loreActive = false;
+    loreVideoClose(true);
 
     if (loreRAF) { cancelAnimationFrame(loreRAF); loreRAF = null; }
     window.removeEventListener('resize', resizeLore);
@@ -616,6 +620,65 @@
     }, { threshold: 0.07 });
     document.querySelectorAll('.lore-chapter').forEach(c => io.observe(c));
   }
+
+
+  /* ══════════════════════════════════════════════════════════
+     VIDEO MODAL
+  ══════════════════════════════════════════════════════════ */
+  let videoOverlay = null;
+  let bgmWasPlaying = false;
+
+  function youtubeId(url) {
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+    return m ? m[1] : null;
+  }
+
+  window.loreVideoOpen = function () {
+    if (videoOverlay) return;
+
+    /* Pause BGM selama video diputar */
+    bgmWasPlaying = bgmPlaying;
+    if (bgmPlaying) bgmPause();
+
+    let media;
+    if (!LORE_VIDEO_URL) {
+      media = '<div class="lore-video-empty">Video belum tersedia.</div>';
+    } else if (youtubeId(LORE_VIDEO_URL)) {
+      media = '<iframe src="https://www.youtube.com/embed/' + youtubeId(LORE_VIDEO_URL) +
+              '?autoplay=1&rel=0" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+    } else {
+      media = '<video src="' + LORE_VIDEO_URL + '" controls autoplay playsinline></video>';
+    }
+
+    videoOverlay = document.createElement('div');
+    videoOverlay.className = 'lore-video-overlay';
+    videoOverlay.innerHTML =
+      '<div class="lore-video-modal">' +
+        '<button class="lore-video-close" aria-label="Tutup video">✕</button>' +
+        '<div class="lore-video-frame">' + media + '</div>' +
+      '</div>';
+    document.body.appendChild(videoOverlay);
+    requestAnimationFrame(() => videoOverlay.classList.add('show'));
+
+    videoOverlay.addEventListener('click', e => {
+      if (e.target === videoOverlay || e.target.closest('.lore-video-close')) loreVideoClose();
+    });
+    document.addEventListener('keydown', videoEsc);
+  };
+
+  function videoEsc(e) { if (e.key === 'Escape') loreVideoClose(); }
+
+  function loreVideoClose(skipBgm) {
+    if (!videoOverlay) return;
+    document.removeEventListener('keydown', videoEsc);
+    const v = videoOverlay.querySelector('video');
+    if (v) v.pause();
+    videoOverlay.remove();      // menghapus iframe juga → YouTube berhenti
+    videoOverlay = null;
+    if (bgmWasPlaying && skipBgm !== true) bgmPlay();
+    bgmWasPlaying = false;
+  }
+  window.loreVideoClose = function () { loreVideoClose(); };
 
   /* ══════════════════════════════════════════════════════════
      TOC SCROLL HELPER
